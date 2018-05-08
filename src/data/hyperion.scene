@@ -97,6 +97,7 @@ mesh
 #mesh
 {
 	file hyperion/floor.obj
+
 #	material cream
 }
 

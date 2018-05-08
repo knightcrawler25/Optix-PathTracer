@@ -71,7 +71,7 @@ RT_CALLABLE_PROGRAM void Pdf(MaterialParameter &mat, State &state, PerRayData_ra
 	float3 V = -ray.direction;
 	float3 L = prd.direction;
 
-    float specularAlpha = max(0.001f, mat.roughness);
+	float specularAlpha = max(0.001f, mat.roughness);
 	float clearcoatAlpha = lerp(0.1f, 0.001f, mat.clearcoatGloss);
 	
 	float diffuseRatio = 0.5f * (1.f - mat.metallic);
@@ -86,9 +86,9 @@ RT_CALLABLE_PROGRAM void Pdf(MaterialParameter &mat, State &state, PerRayData_ra
 	// calculate diffuse and specular pdfs and mix ratio
 	float ratio = 1.0f / (1.0f + mat.clearcoat);
 	float pdfSpec = lerp(pdfGTR1, pdfGTR2, ratio) / (4.0 * abs(dot(L, half)));
-    float pdfDiff = abs(dot(L, n))* (1.0f / M_PIf);
+	float pdfDiff = abs(dot(L, n))* (1.0f / M_PIf);
 
-    // weight pdfs according to ratios
+	// weight pdfs according to ratios
 	prd.pdf =  diffuseRatio * pdfDiff + specularRatio * pdfSpec;
 
 }
@@ -103,9 +103,9 @@ RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData
 	float3 V = -ray.direction;
 	prd.origin = state.fhp;
 
-    float3 dir;
+	float3 dir;
 	
-    float probability = rnd(prd.seed);
+	float probability = rnd(prd.seed);
 	float diffuseRatio = 0.5f * (1.0f - mat.metallic);
 
 	float r1 = rnd(prd.seed);
@@ -114,27 +114,27 @@ RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData
 	optix::Onb onb( N ); // basis
 
 	if (probability < diffuseRatio) // sample diffuse
-    {
+	{
 		cosine_sample_hemisphere(r1, r2, dir);
 		onb.inverse_transform(dir);
-    }
-    else
-    {
+	}
+	else
+	{
 		float a = max(0.001f, mat.roughness);
 
-        float phi = r1 * 2.0f * M_PIf;
+		float phi = r1 * 2.0f * M_PIf;
         
-        float cosTheta = sqrtf((1.0f - r2) / (1.0f + (a*a-1.0f) *r2));      
-        float sinTheta = sqrtf(1.0f - (cosTheta * cosTheta));
-        float sinPhi = sinf(phi);
-        float cosPhi = cosf(phi);
+		float cosTheta = sqrtf((1.0f - r2) / (1.0f + (a*a-1.0f) *r2));      
+		float sinTheta = sqrtf(1.0f - (cosTheta * cosTheta));
+		float sinPhi = sinf(phi);
+		float cosPhi = cosf(phi);
 
 		float3 half = make_float3(sinTheta*cosPhi, sinTheta*sinPhi, cosTheta);
 		onb.inverse_transform(half);
 
-        dir = 2.0f*dot(V, half)*half - V; //reflection vector
+		dir = 2.0f*dot(V, half)*half - V; //reflection vector
 
-    }
+	}
 	prd.direction = dir;
 }
 
@@ -198,5 +198,5 @@ RT_CALLABLE_PROGRAM float3 Eval(MaterialParameter &mat, State &state, PerRayData
 		* (1.0f - mat.metallic)
 		+ Gs*Fs*Ds + 0.25f*mat.clearcoat*Gr*Fr*Dr;
 
-    return out * clamp(dot(N, L), 0.0f, 1.0f);
+	return out * clamp(dot(N, L), 0.0f, 1.0f);
 }

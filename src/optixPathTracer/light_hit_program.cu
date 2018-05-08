@@ -57,7 +57,7 @@ RT_PROGRAM void closest_hit()
 {
 	const float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
 	const float3 world_geometric_normal = normalize( rtTransformNormal( RT_OBJECT_TO_WORLD, geometric_normal ) );
-    const float3 ffnormal = faceforward( world_shading_normal, -ray.direction, world_geometric_normal );
+	const float3 ffnormal = faceforward( world_shading_normal, -ray.direction, world_geometric_normal );
 
 	LightParameter light = sysLightParameters[lightMaterialId];
 	float cosTheta = dot(-ray.direction, light.normal);

@@ -65,44 +65,44 @@ RT_CALLABLE_PROGRAM void Pdf(MaterialParameter &mat, State &state, PerRayData_ra
 
 RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData_radiance &prd)
 {
-    const float3 w_out = -ray.direction;
-    float3 normal = state.normal;
-    float cos_theta_i = optix::dot( w_out, normal );
+	const float3 w_out = -ray.direction;
+	float3 normal = state.normal;
+	float cos_theta_i = optix::dot( w_out, normal );
 
-    float eta;
+	float eta;
 	float3 transmittance = make_float3(1.0f);
 	float3 extinction = -logf(make_float3(0.905f, 0.63f, 0.3));
-    if( cos_theta_i > 0.0f ) 
+	if( cos_theta_i > 0.0f )
 	{
 		eta = 1.45f;
-    } 
-	else 
+	} 
+	else
 	{
 		transmittance = optix::expf(-extinction * t_hit);
-        eta = 1.0f / 1.45f;
-        cos_theta_i = -cos_theta_i;
-        normal = -normal;
-    }
+		eta = 1.0f / 1.45f;
+		cos_theta_i = -cos_theta_i;
+		normal = -normal;
+	}
 	//intData.mat.color = transmittance;
 
-    float3 w_t;
-    const bool tir  = !optix::refract( w_t, -w_out, normal, eta );
-    const float cos_theta_t = -optix::dot( normal, w_t );
-    const float R  = tir  ? 1.0f : fresnel( cos_theta_i, cos_theta_t, eta );
+	float3 w_t;
+	const bool tir  = !optix::refract( w_t, -w_out, normal, eta );
+	const float cos_theta_t = -optix::dot( normal, w_t );
+	const float R  = tir  ? 1.0f : fresnel( cos_theta_i, cos_theta_t, eta );
 
-    const float z = rnd(prd.seed);
-    if( z <= R ) 
+	const float z = rnd(prd.seed);
+	if( z <= R )
 	{
-        // Reflect
+		// Reflect
 		prd.origin = state.fhp;
 		prd.direction =  optix::reflect( -w_out, normal );
-    } 
-	else 
+	}
+	else
 	{
-        // Refract
+		// Refract
 		prd.origin = state.bhp;
 		prd.direction = w_t;
-    }
+	}
 }
 
 RT_CALLABLE_PROGRAM float3 Eval(MaterialParameter &mat, State &state, PerRayData_radiance &prd)

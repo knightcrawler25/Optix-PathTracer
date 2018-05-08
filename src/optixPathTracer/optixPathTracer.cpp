@@ -202,34 +202,34 @@ void createContext( bool use_pbo )
 
 	Program prg;
 	// BRDF sampling functions.
-    m_bufferBRDFSample = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_PROGRAM_ID, NUMBER_OF_BRDF_INDICES);
-    int* brdfSample = (int*) m_bufferBRDFSample->map(0, RT_BUFFER_MAP_WRITE_DISCARD);
-    prg = context->createProgramFromPTXFile(ptxPath("disney.cu"), "Sample");
-    brdfSample[0] = prg->getId();
+	m_bufferBRDFSample = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_PROGRAM_ID, NUMBER_OF_BRDF_INDICES);
+	int* brdfSample = (int*) m_bufferBRDFSample->map(0, RT_BUFFER_MAP_WRITE_DISCARD);
+	prg = context->createProgramFromPTXFile(ptxPath("disney.cu"), "Sample");
+	brdfSample[0] = prg->getId();
 	prg = context->createProgramFromPTXFile(ptxPath("glass.cu"), "Sample");
 	brdfSample[1] = prg->getId();
-    m_bufferBRDFSample->unmap();
-    context["sysBRDFSample"]->setBuffer(m_bufferBRDFSample);
+	m_bufferBRDFSample->unmap();
+	context["sysBRDFSample"]->setBuffer(m_bufferBRDFSample);
 	
 	// BRDF Eval functions.
-    m_bufferBRDFEval = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_PROGRAM_ID, NUMBER_OF_BRDF_INDICES);
-    int* brdfEval = (int*) m_bufferBRDFEval->map(0, RT_BUFFER_MAP_WRITE_DISCARD);
-    prg = context->createProgramFromPTXFile(ptxPath("disney.cu"), "Eval");
-    brdfEval[0] = prg->getId();
+	m_bufferBRDFEval = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_PROGRAM_ID, NUMBER_OF_BRDF_INDICES);
+	int* brdfEval = (int*) m_bufferBRDFEval->map(0, RT_BUFFER_MAP_WRITE_DISCARD);
+	prg = context->createProgramFromPTXFile(ptxPath("disney.cu"), "Eval");
+	brdfEval[0] = prg->getId();
 	prg = context->createProgramFromPTXFile(ptxPath("glass.cu"), "Eval");
 	brdfEval[1] = prg->getId();
-    m_bufferBRDFEval->unmap();
-    context["sysBRDFEval"]->setBuffer(m_bufferBRDFEval);
+	m_bufferBRDFEval->unmap();
+	context["sysBRDFEval"]->setBuffer(m_bufferBRDFEval);
 	
 	// BRDF Pdf functions.
-    m_bufferBRDFPdf = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_PROGRAM_ID, NUMBER_OF_BRDF_INDICES);
-    int* brdfPdf = (int*) m_bufferBRDFPdf->map(0, RT_BUFFER_MAP_WRITE_DISCARD);
-    prg = context->createProgramFromPTXFile(ptxPath("disney.cu"), "Pdf");
-    brdfPdf[0] = prg->getId();
+	m_bufferBRDFPdf = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_PROGRAM_ID, NUMBER_OF_BRDF_INDICES);
+	int* brdfPdf = (int*) m_bufferBRDFPdf->map(0, RT_BUFFER_MAP_WRITE_DISCARD);
+	prg = context->createProgramFromPTXFile(ptxPath("disney.cu"), "Pdf");
+	brdfPdf[0] = prg->getId();
 	prg = context->createProgramFromPTXFile(ptxPath("glass.cu"), "Pdf");
 	brdfPdf[1] = prg->getId();
-    m_bufferBRDFPdf->unmap();
-    context["sysBRDFPdf"]->setBuffer(m_bufferBRDFPdf);
+	m_bufferBRDFPdf->unmap();
+	context["sysBRDFPdf"]->setBuffer(m_bufferBRDFPdf);
 
 	// Light sampling functions.
 	m_bufferLightSample = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_PROGRAM_ID, NUMBER_OF_LIGHT_INDICES);
@@ -244,18 +244,18 @@ void createContext( bool use_pbo )
 
 Material createMaterial(const MaterialParameter &mat, int index)
 {
-    const std::string ptx_path = ptxPath( "hit_program.cu" );
-    Program ch_program = context->createProgramFromPTXFile( ptx_path, "closest_hit" );
+	const std::string ptx_path = ptxPath( "hit_program.cu" );
+	Program ch_program = context->createProgramFromPTXFile( ptx_path, "closest_hit" );
 	Program ah_program = context->createProgramFromPTXFile(ptx_path, "any_hit");
 	
-    Material material = context->createMaterial();
-    material->setClosestHitProgram( 0, ch_program );
+	Material material = context->createMaterial();
+	material->setClosestHitProgram( 0, ch_program );
 	material->setAnyHitProgram(1, ah_program);
 	
 	material["materialId"]->setInt(index);
 	material["programId"]->setInt(mat.brdf);
 
-    return material;
+	return material;
 }
 
 Material createLightMaterial(const LightParameter &mat, int index)
@@ -648,7 +648,7 @@ int main( int argc, char** argv )
 		if (mesh_files.empty()) {
 
 			// Default scene
-			scene_file = sutil::samplesDir() + std::string("/data/spaceship.scene");
+			scene_file = sutil::samplesDir() + std::string("/data/hyperion.scene");
 			LoadScene(scene_file.c_str(), mesh_files, mesh_xforms, materials, lights, properties);
 		}
 

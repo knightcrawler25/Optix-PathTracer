@@ -54,7 +54,6 @@ RT_FUNCTION float3 UniformSampleSphere(float u1, float u2)
 
 RT_CALLABLE_PROGRAM void sphere_sample(LightParameter &light, PerRayData_radiance &prd, LightSample &sample)
 {
-
 	const float r1 = rnd(prd.seed);
 	const float r2 = rnd(prd.seed);
 	sample.surfacePos = light.position + UniformSampleSphere(r1, r2) * light.radius;
