@@ -3,6 +3,7 @@ OptixPathTracer
 ==========
 
 ![Spaceship](./spaceship.png)
+Render Time: 6 minutes on a GTX 750ti
 
 A physically based path tracer with support for Disney BRDF.
 
