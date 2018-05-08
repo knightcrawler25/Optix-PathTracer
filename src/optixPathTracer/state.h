@@ -12,7 +12,6 @@ struct State
 	optix::float3 bhp;
 	optix::float3 normal;
 	optix::float3 ffnormal;
-	optix::float3 brdfDir;
 };
 
 #endif
