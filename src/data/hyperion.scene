@@ -1,0 +1,151 @@
+properties
+{
+	width 1280
+	height 720
+}
+
+material orangish
+{
+	color 1.0 0.186 0.0
+	roughness 0.035
+	specular 0.5
+	clearcoat 1.0
+	clearcoatGloss 0.93
+}
+
+material glass
+{
+	color 1.0 1.0 1.0
+	brdf 1
+}
+
+material silver
+{
+	color 0.9 0.9 0.9
+	specular 0.5
+	roughness 0.01
+	metallic 1.0 
+}
+
+material ring_silver
+{
+	color 1.0 1.0 1.0
+	roughness 0.01 
+	specular 0.5
+	metallic 1.0 
+}
+
+material cream
+{
+	color 1.0 0.94 0.8
+	roughness 1.0
+	specular 0.5
+}
+
+material ping
+{
+	color 1.0 1.0 1.0
+	roughness 0.8
+	subsurface 1.0
+	specular 0.5
+}
+
+material marb1
+{
+	color 0.026 0.147 0.075
+	roughness 0.077
+	specular 0.5
+	subsurface 1.0
+	clearcoat 1.0
+	clearcoatGloss 0.93
+}
+
+material marb2
+{
+	color 0.099 0.24 0.134
+	roughness 0.077
+	specular 0.5
+	subsurface 1.0
+	clearcoat 1.0
+	clearcoatGloss 0.93
+}
+
+mesh
+{
+	file hyperion/glass.obj
+	material glass
+}
+
+#mesh
+{
+	file hyperion/dragon.obj
+#	material glass
+}
+
+mesh
+{
+	file hyperion/chrome.obj
+	material silver
+}
+
+mesh
+{
+	file hyperion/plate.obj
+	material cream
+}
+
+#mesh
+{
+	file hyperion/floor.obj
+#	material cream
+}
+
+mesh
+{
+	file hyperion/orange.obj
+	material orangish
+}
+
+mesh
+{
+	file hyperion/ring1.obj
+	material ring_silver
+}
+
+mesh
+{
+	file hyperion/ring2.obj
+	material ring_silver
+}
+
+mesh
+{
+	file hyperion/ring3.obj
+	material ring_silver
+}
+
+mesh
+{
+	file hyperion/marb1.obj
+	material marb1
+}
+
+mesh
+{
+	file hyperion/marb2.obj
+	material marb2
+}
+
+mesh
+{
+	file hyperion/pingpong.obj
+	material ping
+}
+
+light
+{
+	emission 80.0 80.0 80.0
+	position 0 390.0 -400.0
+	radius 80.0
+	type 0
+}

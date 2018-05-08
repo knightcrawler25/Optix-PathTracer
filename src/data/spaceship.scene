@@ -1,0 +1,616 @@
+properties
+{
+	width 1280
+	height 720
+}
+
+material Backdrop
+{
+	color 0.1 0.1 0.1
+}
+
+material RoughAluminium
+{
+	color 0.778 0.778 0.778
+	roughness 0.2
+	metallic 1.0
+}
+
+material RoughSteel
+{
+	color 0.2 0.2 0.2
+	roughness 0.1
+	metallic 1.0
+}
+
+material DarkPlastic
+{
+	color 0.01 0.01 0.01
+	roughness 0.2
+}
+
+material PinkLeather
+{
+	color 0.25 0.013 0.08
+	roughness 0.4
+}
+
+material Leather
+{
+	color 0.034 0.014 0.008
+	roughness 0.4
+}
+
+material RedLeather
+{
+	color 0.163 0.03 0.037
+	roughness 0.4
+}
+
+material BrightPinkLeather
+{
+	color 0.77 0.174 0.261
+	roughness 0.4
+}
+
+material Glass
+{
+	color 1.0 1.0 1.0
+	brdf 1
+}
+
+material DarkRubber
+{
+	color 0.025 0.025 0.025
+	roughness 0.4
+}
+
+material Light1
+{
+	color 0.0 0.0 0.0
+	emission 20.000000 3.000000 3.000000
+}
+
+material Light2
+{
+	color 0.0 0.0 0.0
+	emission 3.886280 3.772550 3.431370
+}
+
+
+light
+{
+	type 1
+	position -2.04973 5.14472 0.974365
+	u 4.09 0 0
+	v 0 0 1.277
+	emission 9 9 10
+	
+}
+
+light
+{
+	type 1
+	position -2.04973 5.14472 -2.24722 
+	u 4.09 0 0
+	v 0 0 1.277
+	emission 9 9 10
+}
+
+mesh
+{
+	file ship/Mesh050.obj
+	material Backdrop
+}
+
+mesh
+{
+	file ship/Mesh042.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh038.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh040.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh072.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh027.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh067.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh060.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh065.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh048.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh066.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh046.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh076.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh059.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh057.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh062.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh074.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh075.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh078.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh081.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh034.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh084.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh085.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh073.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh077.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh087.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh052.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh025.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh024.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh086.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh023.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh021.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh039.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh020.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh032.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh018.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh070.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh016.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh015.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh054.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh013.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh079.obj
+	material RoughAluminium
+}
+
+
+mesh
+{
+	file ship/Mesh041.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh012.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh011.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh010.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh083.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh069.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh009.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh007.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh017.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh037.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh005.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh004.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh002.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh056.obj
+	material RoughAluminium
+}
+
+mesh
+{
+	file ship/Mesh033.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh064.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh058.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh026.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh047.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh071.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh019.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh006.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh008.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh045.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh049.obj
+	material RoughSteel
+}
+
+
+mesh
+{
+	file ship/Mesh014.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh003.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh051.obj
+	material RoughSteel
+}
+
+mesh
+{
+	file ship/Mesh001.obj
+	material Glass
+}
+
+mesh
+{
+	file ship/Mesh055.obj
+	material RedLeather
+}
+
+mesh
+{
+	file ship/Mesh036.obj
+	material RedLeather
+}
+
+mesh
+{
+	file ship/Mesh031.obj
+	material RedLeather
+}
+
+mesh
+{
+	file ship/Mesh022.obj
+	material RedLeather
+}
+
+mesh
+{
+	file ship/Mesh053.obj
+	material DarkPlastic
+}
+
+mesh
+{
+	file ship/Mesh061.obj
+	material DarkPlastic
+}
+
+mesh
+{
+	file ship/Mesh035.obj
+	material PinkLeather
+}
+
+mesh
+{
+	file ship/Mesh030.obj
+	material PinkLeather
+}
+
+mesh
+{
+	file ship/Mesh000.obj
+	material BrightPinkLeather
+}
+
+mesh
+{
+	file ship/Mesh044.obj
+	material Leather
+}
+
+mesh
+{
+	file ship/Mesh028.obj
+	material Leather
+}
+
+mesh
+{
+	file ship/Mesh063.obj
+	material DarkRubber
+}
+
+mesh
+{
+	file ship/Mesh068.obj
+	material DarkRubber
+}
+
+mesh
+{
+	file ship/Mesh029.obj
+	material Light2
+}
+
+mesh
+{
+	file ship/Mesh043.obj
+	material Light1
+}
