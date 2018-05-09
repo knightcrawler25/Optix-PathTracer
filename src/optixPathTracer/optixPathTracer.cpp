@@ -684,8 +684,9 @@ int main( int argc, char** argv )
         context->validate();
 
         const optix::float3 camera_eye( optix::make_float3( 0.0f, 1.5f*aabb.extent( 1 ), 1.5f*aabb.extent( 2 ) ) );
-		//const optix::float3 camera_eye(optix::make_float3(-12.08, 11.68, -0.432));
-        const optix::float3 camera_lookat( aabb.center() );
+		//const optix::float3 camera_eye(optix::make_float3(278, 273, -800));
+		//const optix::float3 camera_lookat(optix::make_float3(278, 273, -799));
+		const optix::float3 camera_lookat(aabb.center());
         const optix::float3 camera_up( optix::make_float3( 0.0f, 1.0f, 0.0f ) );
         sutil::Camera camera( properties.width, properties.height, 
                 &camera_eye.x, &camera_lookat.x, &camera_up.x,
