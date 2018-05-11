@@ -1,0 +1,72 @@
+properties
+{
+	width 1280
+	height 720
+}
+
+material white
+{
+	color 1.0 1.0 1.0
+	roughness 0.0
+	specular 1.0
+	metallic 0.4
+}
+
+material grey
+{
+	color 0.17 0.17 0.17
+	specular 0.0
+	roughness 1.0
+}
+
+material black
+{
+	color 0.0 0.0 0.0
+	specular 0.0
+}
+
+
+mesh
+{
+	file stormtrooper/box.obj
+	material grey
+}
+
+mesh
+{
+	file stormtrooper/frame.obj
+	material black
+}
+
+mesh
+{
+	file stormtrooper/helmets.obj
+	material white
+}
+
+light
+{
+	position 1.225934 2.998622 4.573376
+	u -1.978162 2.998622 -0.324129
+	v 1.777686 2.998622 4.212403
+	emission 0.11 2.18 3.2
+	type 1
+}
+
+light
+{
+	position -2.298571 2.998622 -0.813879
+	u -4.950915 2.998622 -6.072357
+	v -1.746819 2.998622 -1.174852
+	emission 0.11 2.18 3.2
+	type 1
+}
+
+light
+{
+	position -5.823077 2.998622 -6.201134
+	u -8.475420 2.998622 -11.459612
+	v -5.271325 2.998622 -6.562108
+	emission 0.11 2.18 3.2
+	type 1
+}
