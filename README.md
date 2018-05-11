@@ -13,7 +13,7 @@ can be done in a much better way please do share :)
 
 Features
 --------
-( Most were part of existing code from the Nvidia's Optix Advanced Samples Repo )  
+( Most were part of existing code from the Nvidia's Optix Advanced Samples Repository on Github )  
 - Unidirectional Path Tracing  
 - Disney BRDF  
 - Simple Glass BTDF  
@@ -24,14 +24,14 @@ Features
 
 Following are some scenes rendered with the path tracer
 --------
-Stormtrooper (Render Time: ~3 minutes)  
+Stormtrooper (Render Time: ~4 minutes)  
 Original model: (https://www.blendswap.com/blends/view/76637)
 ![Stormtrooper](./stormtrooper.png)
 
 Coffee Pot (Render Time: 4 minutes. 1k spp)
 ![Coffee Pot](./coffee_pot.png)
 
-Hyperion Scene (Render Time: Quite long)
+Remake of the Disney Hyperion Scene (Render Time: Quite long)
 ![Hyperion Scene](./hyperion.png)
 
 ![Dragon closeup](./dragon.png)
