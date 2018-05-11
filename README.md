@@ -16,8 +16,8 @@ Features
 ( Most were part of existing code from the Nvidia's advanced optix samples )  
 - Unidirectional Path Tracing  
 - Disney BRDF  
-- Simple Glass BRDF  
-- Sphere and Rect lights  
+- Simple Glass BTDF  
+- Sphere and Rect lights  
 - Multiple importance sampling  
 - Mesh Loading
 - Simple Scene file (Basically stolen from Miles Macklin's excellent tinsel renderer) (https://github.com/mmacklin/tinsel) so all credits go to him.
