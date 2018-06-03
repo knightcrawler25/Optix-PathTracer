@@ -84,6 +84,7 @@ RT_PROGRAM void pinhole_camera()
   prd.seed = seed;
   prd.done = false;
   prd.pdf = 0.0f;
+  prd.specularBounce = false;
 
   // These represent the current shading state and will be set by the closest-hit or miss program
 
@@ -106,12 +107,8 @@ RT_PROGRAM void pinhole_camera()
       optix::Ray ray(ray_origin, ray_direction, /*ray type*/ 0, scene_epsilon );
       rtTrace(top_object, ray, prd);
 
-      if ( prd.done ) {
+      if ( prd.done || prd.depth >= max_depth)
           break;
-      } else if ( prd.depth >= max_depth ) {
-		  prd.throughput *= cutoff_color;
-        break;
-      }
 
       prd.depth++;
 
@@ -130,6 +127,7 @@ RT_PROGRAM void pinhole_camera()
   }
 
   float4 val = LinearToSrgb(ToneMap(acc_val, 1.5));
+  //float4 val = LinearToSrgb(acc_val);
 
   output_buffer[launch_index] = make_color(make_float3(val));
   accum_buffer[launch_index] = acc_val;

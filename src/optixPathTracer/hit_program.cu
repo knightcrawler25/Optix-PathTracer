@@ -51,6 +51,7 @@ rtDeclareVariable(PerRayData_radiance, prd, rtPayload, );
 rtDeclareVariable(PerRayData_shadow, prd_shadow, rtPayload, );
 rtDeclareVariable(rtObject, top_object, , );
 rtDeclareVariable(float, scene_epsilon, , );
+rtDeclareVariable(int, max_depth, , );
 
 rtBuffer< rtCallableProgramId<void(MaterialParameter &mat, State &state, PerRayData_radiance &prd)> > sysBRDFPdf;
 rtBuffer< rtCallableProgramId<void(MaterialParameter &mat, State &state, PerRayData_radiance &prd)> > sysBRDFSample;
@@ -101,7 +102,7 @@ RT_FUNCTION float3 DirectLight(MaterialParameter &mat, State &state)
 		sysBRDFPdf[programId](mat, state, prd);
 		float3 f = sysBRDFEval[programId](mat, state, prd);
 
-		L = powerHeuristic(lightPdf, prd.pdf) * f * lightSample.emission * (abs(dot(lightDir, surfaceNormal)) / max(0.001f, lightPdf));
+		L = powerHeuristic(lightPdf, prd.pdf) * prd.throughput * f * lightSample.emission / max(0.001f, lightPdf);
 	}
 
 	return L;
@@ -123,9 +124,13 @@ RT_PROGRAM void closest_hit()
 
 	prd.radiance += mat.emission * prd.throughput;
 
+	prd.specularBounce = false;
+	if (mat.brdf == GLASS)
+		prd.specularBounce = true;
+
 	// Direct light Sampling
-	if (mat.brdf != GLASS)
-		prd.radiance += prd.throughput * DirectLight(mat, state);
+	if (!prd.specularBounce && prd.depth < max_depth)
+		prd.radiance += DirectLight(mat, state);
 
 	// BRDF Sampling
 	sysBRDFSample[programId](mat, state, prd);
@@ -133,7 +138,7 @@ RT_PROGRAM void closest_hit()
 	float3 f = sysBRDFEval[programId](mat, state, prd);
 
 	if (prd.pdf > 0.0f)
-		prd.throughput *= f / prd.pdf;
+		prd.throughput *= f / prd.pdf; 
 	else
 		prd.done = true;
 }

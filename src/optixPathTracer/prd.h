@@ -38,6 +38,7 @@ struct PerRayData_radiance
   // shading state
   bool done;
   bool inShadow;
+  bool specularBounce;
   float3 radiance;
   float3 origin;
   float3 direction;

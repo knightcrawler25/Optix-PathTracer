@@ -43,6 +43,7 @@ OPTIX_add_sample_executable( optixPathTracer
     path_trace_camera.cu
     quad_intersect.cu
 	disney.cu
+	lambert.cu
 	glass.cu
 	hit_program.cu
 	light_hit_program.cu

@@ -61,10 +61,11 @@ RT_PROGRAM void closest_hit()
 
 	LightParameter light = sysLightParameters[lightMaterialId];
 	float cosTheta = dot(-ray.direction, light.normal);
+
 	if ((light.lightType == QUAD && cosTheta > 0.0f) || light.lightType == SPHERE)
 	{
-		if(prd.depth == 0)
-			prd.radiance = light.emission;
+		if(prd.depth == 0 || prd.specularBounce)
+			prd.radiance += light.emission * prd.throughput;
 		else
 		{
 			float lightPdf = (hit_dist * hit_dist) / (light.area * clamp(cosTheta, 1.e-3f, 1.0f));

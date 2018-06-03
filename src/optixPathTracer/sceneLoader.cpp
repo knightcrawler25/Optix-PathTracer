@@ -100,17 +100,17 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 				sscanf(line, " normal %f %f %f", &light.normal.x, &light.normal.y, &light.normal.z);
 
 				sscanf(line, " radius %f", &light.radius);
-				//sscanf(line, " u %f %f %f", &light.v1.x, &light.v1.y, &light.v1.z);
-				//sscanf(line, " v %f %f %f", &light.v2.x, &light.v2.y, &light.v2.z);
-				sscanf(line, " u %f %f %f", &u.x, &u.y, &u.z);
-				sscanf(line, " v %f %f %f", &v.x, &v.y, &v.z);
+				sscanf(line, " u %f %f %f", &light.v1.x, &light.v1.y, &light.v1.z);
+				sscanf(line, " v %f %f %f", &light.v2.x, &light.v2.y, &light.v2.z);
+				//sscanf(line, " u %f %f %f", &u.x, &u.y, &u.z);
+				//sscanf(line, " v %f %f %f", &v.x, &v.y, &v.z);
 				sscanf(line, " type %i", &light.lightType);
 			}
 
 			if (light.lightType == QUAD)
 			{
-				light.v1 = u - light.position;
-				light.v2 = v - light.position;
+				//light.v1 = u - light.position;
+				//light.v2 = v - light.position;
 				light.area = optix::length(optix::cross(light.v1, light.v2));
 				light.normal = optix::normalize(optix::cross(light.v1, light.v2));
 			}

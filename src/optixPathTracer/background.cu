@@ -37,7 +37,7 @@ rtDeclareVariable(float3, background_dark, , );  // zenith color
 rtDeclareVariable(float3, up, , );               // global up vector
 
 rtDeclareVariable(optix::Ray, ray, rtCurrentRay, );
-rtDeclareVariable(PerRayData_radiance, prd_radiance, rtPayload, );
+rtDeclareVariable(PerRayData_radiance, prd, rtPayload, );
 rtTextureSampler<float4, 2> envmap;
 
 // -----------------------------------------------------------------------------
@@ -62,6 +62,6 @@ RT_PROGRAM void miss()
 	//if (prd_radiance.depth == 0)
 		//prd_radiance.radiance = make_float3(0.0f);
 	//else
-	prd_radiance.radiance += make_float3(0.0f) * prd_radiance.throughput;
-	prd_radiance.done = true;
+	prd.radiance += make_float3(0.0f) * prd.throughput;
+	prd.done = true;
 }

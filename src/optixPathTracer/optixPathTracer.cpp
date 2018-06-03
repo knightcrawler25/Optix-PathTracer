@@ -65,7 +65,7 @@ using namespace optix;
 
 const char* const SAMPLE_NAME = "optixPathTracer";
 
-const int NUMBER_OF_BRDF_INDICES = 2;
+const int NUMBER_OF_BRDF_INDICES = 3;
 const int NUMBER_OF_LIGHT_INDICES = 2;
 optix::Buffer m_bufferBRDFSample;
 optix::Buffer m_bufferBRDFEval;
@@ -208,6 +208,8 @@ void createContext( bool use_pbo )
 	brdfSample[0] = prg->getId();
 	prg = context->createProgramFromPTXFile(ptxPath("glass.cu"), "Sample");
 	brdfSample[1] = prg->getId();
+	prg = context->createProgramFromPTXFile(ptxPath("lambert.cu"), "Sample");
+	brdfSample[2] = prg->getId();
 	m_bufferBRDFSample->unmap();
 	context["sysBRDFSample"]->setBuffer(m_bufferBRDFSample);
 	
@@ -218,6 +220,8 @@ void createContext( bool use_pbo )
 	brdfEval[0] = prg->getId();
 	prg = context->createProgramFromPTXFile(ptxPath("glass.cu"), "Eval");
 	brdfEval[1] = prg->getId();
+	prg = context->createProgramFromPTXFile(ptxPath("lambert.cu"), "Eval");
+	brdfEval[2] = prg->getId();
 	m_bufferBRDFEval->unmap();
 	context["sysBRDFEval"]->setBuffer(m_bufferBRDFEval);
 	
@@ -228,6 +232,8 @@ void createContext( bool use_pbo )
 	brdfPdf[0] = prg->getId();
 	prg = context->createProgramFromPTXFile(ptxPath("glass.cu"), "Pdf");
 	brdfPdf[1] = prg->getId();
+	prg = context->createProgramFromPTXFile(ptxPath("lambert.cu"), "Pdf");
+	brdfPdf[2] = prg->getId();
 	m_bufferBRDFPdf->unmap();
 	context["sysBRDFPdf"]->setBuffer(m_bufferBRDFPdf);
 
@@ -328,14 +334,14 @@ optix::Aabb createGeometry(
     top_group->setAcceleration( context->createAcceleration( "Trbvh" ) );
 
     int num_triangles = 0;
-	size_t i;
+	size_t i,j;
     optix::Aabb aabb;
     {
         GeometryGroup geometry_group = context->createGeometryGroup();
         geometry_group->setAcceleration( context->createAcceleration( "Trbvh" ) );
         top_group->addChild( geometry_group );
 		
-        for (i = 0; i < filenames.size(); ++i) {
+        for (i = 0,j=0; i < filenames.size(); ++i,++j) {
             OptiXMesh mesh;
             mesh.context = context;
             
@@ -359,6 +365,7 @@ optix::Aabb createGeometry(
 		GeometryGroup geometry_group = context->createGeometryGroup();
 		geometry_group->setAcceleration(context->createAcceleration("NoAccel"));
 		top_group->addChild(geometry_group);
+		
 		for (i = 0; i < lights.size(); ++i)
 		{
 			GeometryInstance instance;
@@ -368,7 +375,11 @@ optix::Aabb createGeometry(
 				instance = createSphere(context, createLightMaterial(lights[i], i), lights[i].position, lights[i].radius);
 			geometry_group->addChild(instance);
 		}
+		//GeometryInstance instance = createSphere(context, createMaterial(materials[j], j), optix::make_float3(150, 80, 120), 80);
+		//geometry_group->addChild(instance);
 	}
+
+	
 
     context[ "top_object" ]->set( top_group ); 
 
@@ -652,6 +663,11 @@ int main( int argc, char** argv )
 			LoadScene(scene_file.c_str(), mesh_files, mesh_xforms, materials, lights, properties);
 		}
 
+		/*MaterialParameter mat;
+		mat.brdf = GLASS;
+		mat.color = optix::make_float3(1.0f);
+		materials.push_back(mat);*/
+
         GLFWwindow* window = glfwInitialize();
 
 #ifndef __APPLE__
@@ -684,9 +700,13 @@ int main( int argc, char** argv )
         context->validate();
 
         const optix::float3 camera_eye( optix::make_float3( 0.0f, 1.5f*aabb.extent( 1 ), 1.5f*aabb.extent( 2 ) ) );
+		const optix::float3 camera_lookat(aabb.center());
+
 		//const optix::float3 camera_eye(optix::make_float3(278, 273, -800));
 		//const optix::float3 camera_lookat(optix::make_float3(278, 273, -799));
-		const optix::float3 camera_lookat(aabb.center());
+		//const optix::float3 camera_eye(optix::make_float3(0,1,4.9));
+		//const optix::float3 camera_lookat(optix::make_float3(0,1,3));
+		
         const optix::float3 camera_up( optix::make_float3( 0.0f, 1.0f, 0.0f ) );
         sutil::Camera camera( properties.width, properties.height, 
                 &camera_eye.x, &camera_lookat.x, &camera_up.x,

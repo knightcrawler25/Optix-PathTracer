@@ -94,11 +94,10 @@ mesh
 	material cream
 }
 
-#mesh
+mesh
 {
 	file hyperion/floor.obj
-
-#	material cream
+	material cream
 }
 
 mesh
@@ -146,7 +145,7 @@ mesh
 light
 {
 	emission 80.0 80.0 80.0
-	position 0 390.0 -400.0
-	radius 80.0
+	position 0 390.0 -439.0
+	radius 60.0
 	type 0
 }
