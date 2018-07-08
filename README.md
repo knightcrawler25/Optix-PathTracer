@@ -20,15 +20,14 @@ Features
 - Sphere and Rect lights  
 - Multiple Importance Sampling  
 - Mesh Loading
-- Simple Scene File (Basically stolen from Miles Macklin's excellent tinsel renderer) (https://github.com/mmacklin/tinsel) so all credits go to him.
+- Simple Scene File (Basically stolen from Miles Macklin's excellent [Tinsel renderer](https://github.com/mmacklin/tinsel) ) so all credits go to him.
 
 Following are some scenes rendered with the path tracer
 --------
-Stormtrooper (Render Time: ~4 minutes)  
-Original model: (https://www.blendswap.com/blends/view/76637)
+[Stormtrooper](https://www.blendswap.com/blends/view/76637) (Render Time: ~4 minutes)  
 ![Stormtrooper](./stormtrooper.png)
 
-Coffee Pot (Render Time: 4 minutes. 1k spp)
+[Coffee Pot](https://benedikt-bitterli.me/resources) (Render Time: 4 minutes. 1k spp)
 ![Coffee Pot](./coffee_pot.png)
 
 Remake of the Disney Hyperion Scene (Render Time: Quite long)
@@ -36,8 +35,7 @@ Remake of the Disney Hyperion Scene (Render Time: Quite long)
 
 ![Dragon closeup](./dragon.png)
 
-Thanks to Simon Kallweit for helping me out with the importance sampling code. He also has a nice write up of his implementation
-(http://simon-kallweit.me/rendercompo2015/).
+Thanks to Simon Kallweit for helping me out with the importance sampling code. He also has a nice write up of his [implementation](http://simon-kallweit.me/rendercompo2015/)
 
 Models are from [Benedikt Bitterli's Rendering Resources](https://benedikt-bitterli.me/resources).
 
