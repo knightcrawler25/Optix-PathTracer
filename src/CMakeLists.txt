@@ -131,10 +131,10 @@ endif()
 find_package(CUDA 7.0 REQUIRED)
 find_package(OpenGL REQUIRED)
 
-set(IL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/external/DevIL/include)
-set(IL_LIBRARIES ${PROJECT_SOURCE_DIR}/external/DevIL/lib/x64/Release/DevIL.lib)
-set(ILU_LIBRARIES ${PROJECT_SOURCE_DIR}/external/DevIL/lib/x64/Release/ILU.lib)
-set(ILUT_LIBRARIES ${PROJECT_SOURCE_DIR}/external/DevIL/lib/x64/Release/ILUT.lib)
+set(IL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/support/DevIL/include)
+set(IL_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/DevIL.lib)
+set(ILU_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILU.lib)
+set(ILUT_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILUT.lib)
 
 find_package(DevIL)
 
