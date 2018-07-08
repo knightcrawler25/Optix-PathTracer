@@ -50,6 +50,9 @@
 #include "sceneLoader.h"
 #include "light_parameters.h"
 #include "properties.h"
+#include <IL/il.h>
+#include "Texture.h"
+#include "Picture.h"
 #include <Camera.h>
 #include <OptiXMesh.h>
 
@@ -279,6 +282,21 @@ Material createLightMaterial(const LightParameter &mat, int index)
 
 void updateMaterialParameters(const std::vector<MaterialParameter> &materials)
 {
+	/*Texture albedo;
+	Texture maps;
+
+	Picture* picture = new Picture;
+	std::string textureFilename = std::string(sutil::samplesDir()) + "/data/luggage/albedo.tga";
+	picture->load(textureFilename);
+	albedo.createSampler(context, picture);
+
+	textureFilename = std::string(sutil::samplesDir()) + "/data/luggage/maps.tga";
+	picture->load(textureFilename);
+	maps.createSampler(context, picture);
+
+	delete picture;*/
+
+
 	MaterialParameter* dst = static_cast<MaterialParameter*>(m_bufferMaterialParameters->map(0, RT_BUFFER_MAP_WRITE_DISCARD));
 	for (size_t i = 0; i < materials.size(); ++i, ++dst) {
 		MaterialParameter mat = materials[i];
@@ -296,6 +314,8 @@ void updateMaterialParameters(const std::vector<MaterialParameter> &materials)
 		dst->clearcoat = mat.clearcoat;
 		dst->clearcoatGloss = mat.clearcoatGloss;
 		dst->brdf = mat.brdf;
+		//dst->albedoID = albedo.getId();
+		//dst->mapID = maps.getId();
 	}
 	m_bufferMaterialParameters->unmap();
 }
@@ -659,7 +679,7 @@ int main( int argc, char** argv )
 		if (mesh_files.empty()) {
 
 			// Default scene
-			scene_file = sutil::samplesDir() + std::string("/data/hyperion.scene");
+			scene_file = sutil::samplesDir() + std::string("/data/tunnel.scene");
 			LoadScene(scene_file.c_str(), mesh_files, mesh_xforms, materials, lights, properties);
 		}
 
@@ -678,6 +698,8 @@ int main( int argc, char** argv )
             exit(EXIT_FAILURE);
         }
 #endif
+
+		ilInit();
 
         createContext( use_pbo );
 

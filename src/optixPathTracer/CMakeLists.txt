@@ -27,11 +27,14 @@
 #
 
 include_directories(${SAMPLES_INCLUDE_DIR})
+include_directories(${IL_INCLUDE_DIR})
 
 # See top level CMakeLists.txt file for documentation of OPTIX_add_sample_executable.
 OPTIX_add_sample_executable( optixPathTracer
     optixPathTracer.cpp
 	sceneLoader.cpp
+	Picture.cpp
+	Texture.cpp
 	sceneLoader.h
 	material_parameters.h
 	properties.h
@@ -39,6 +42,9 @@ OPTIX_add_sample_executable( optixPathTracer
 	state.h
 	prd.h
 	rt_function.h
+	MyAssert.h
+	Picture.h
+	Texture.h
 	
     path_trace_camera.cu
     quad_intersect.cu

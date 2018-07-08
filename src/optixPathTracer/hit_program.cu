@@ -116,6 +116,20 @@ RT_PROGRAM void closest_hit()
 
 	MaterialParameter mat = sysMaterialParameters[materialId];
 
+	/*if (mat.albedoID != RT_TEXTURE_ID_NULL)
+	{
+		const float3 texColor = make_float3(optix::rtTex2D<float4>(mat.albedoID, texcoord.x, texcoord.y));
+		mat.color = make_float3(powf(texColor.x, 2.2f), powf(texColor.y, 2.2f), powf(texColor.z, 2.2f));
+	}
+
+	if (mat.mapID != RT_TEXTURE_ID_NULL)
+	{
+		const float3 texColor = make_float3(optix::rtTex2D<float4>(mat.mapID, texcoord.x, texcoord.y));
+		mat.roughness = powf(texColor.x, 2.2f);
+		mat.metallic = powf(texColor.y, 2.2f);
+	}*/
+
+
 	State state;
 	state.fhp = front_hit_point;
 	state.bhp = back_hit_point;

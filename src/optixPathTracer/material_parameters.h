@@ -27,8 +27,13 @@ struct MaterialParameter
 		clearcoat = 0.0f;
 		clearcoatGloss = 1.0f;
 		brdf = DISNEY;
+		albedoID = RT_TEXTURE_ID_NULL;
+		mapID = RT_TEXTURE_ID_NULL;
+		
 	}
 
+	int albedoID;
+	int mapID;
 	optix::float3 color;
 	optix::float3 emission;
 	float metallic;

@@ -1,0 +1,42 @@
+properties
+{
+	width 500
+	height 500
+}
+
+material white
+{
+	color 1.0 1.0 1.0
+}
+
+mesh
+{
+	file tunnel/tunnel.obj
+	material white
+}
+
+#light
+{
+	type 1
+	position -131.2839 0.5424 -169.2602
+	u 0 200 0
+	v 0 0 200
+	emission 12 11.6 6.0
+}
+
+light
+{
+	type 0
+	position 272 62 -351
+	emission 5.5 10.9 20
+	radius 10
+}
+
+light
+{
+	type 0
+	position -1000 500 -169.0
+	emission 24000 22000 12000
+	radius 10
+}
+

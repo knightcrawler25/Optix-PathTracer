@@ -131,6 +131,13 @@ endif()
 find_package(CUDA 7.0 REQUIRED)
 find_package(OpenGL REQUIRED)
 
+set(IL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/external/DevIL/include)
+set(IL_LIBRARIES ${PROJECT_SOURCE_DIR}/external/DevIL/lib/x64/Release/DevIL.lib)
+set(ILU_LIBRARIES ${PROJECT_SOURCE_DIR}/external/DevIL/lib/x64/Release/ILU.lib)
+set(ILUT_LIBRARIES ${PROJECT_SOURCE_DIR}/external/DevIL/lib/x64/Release/ILUT.lib)
+
+find_package(DevIL)
+
 if ( OPENGL_FOUND AND OPENGL_INCLUDE_DIR )
   include_directories( ${OPENGL_INCLUDE_DIR} )
 endif()
@@ -285,6 +292,9 @@ function(OPTIX_add_sample_executable target_name)
     optix
     glfw
     imgui
+	${IL_LIBRARIES}
+	${ILU_LIBRARIES}
+	${ILUT_LIBRARIES}
     ${OPENGL_gl_LIBRARY}
     ${optix_rpath}
     )
@@ -328,9 +338,14 @@ if(WIN32)
         execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${lib} ${path}/${name})
       endfunction()
       
-      # Copy OptiX dlls from the binary directory into the build.
+       # Copy OptiX and optional DevIL dlls from their binary directories into the build
       get_filename_component( path_to_optix_dll ${optix_DLL} PATH )
       file(GLOB dlls "${path_to_optix_dll}/*.dll")
+      if (IL_FOUND)
+        get_filename_component( path_to_devil_dll ${IL_LIBRARIES} PATH )
+        file(GLOB devil_dlls "${path_to_devil_dll}/*.dll")
+        list(APPEND dlls ${devil_dlls})
+      endif()
       foreach(file ${dlls})
         copy_dll("${file}")
       endforeach()
