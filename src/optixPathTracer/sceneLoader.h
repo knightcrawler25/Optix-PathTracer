@@ -21,6 +21,7 @@ freely, subject to the following restrictions:
 #include <stdio.h>
 
 #include <map>
+#include <set>
 #include <string>
 #include <optixu/optixpp_namespace.h>
 #include <optixu/optixu_aabb_namespace.h>
@@ -31,11 +32,24 @@ freely, subject to the following restrictions:
 #include "material_parameters.h"
 #include "properties.h"
 #include "light_parameters.h"
+#include "Picture.h"
+#include "Texture.h"
 
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <stdint.h>
 
-bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::vector<optix::Matrix4x4> &mesh_xforms, 
-	std::vector<MaterialParameter> &materials, std::vector<LightParameter> &lights, Properties &properties);
+
+struct Scene
+{
+	Scene() {};
+	std::vector<std::string> mesh_names;
+	std::vector<optix::Matrix4x4> transforms;
+	std::vector<MaterialParameter> materials;
+	std::vector<LightParameter> lights;
+	std::vector<Texture> textures;
+	Properties properties;
+};
+
+Scene* LoadScene(const char* filename, optix::Context &context);

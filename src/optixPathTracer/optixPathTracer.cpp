@@ -51,8 +51,6 @@
 #include "light_parameters.h"
 #include "properties.h"
 #include <IL/il.h>
-#include "Texture.h"
-#include "Picture.h"
 #include <Camera.h>
 #include <OptiXMesh.h>
 
@@ -88,6 +86,7 @@ double lastTime = 0;
 //------------------------------------------------------------------------------
 Properties properties;
 Context      context = 0;
+Scene* scene;
 
 
 //------------------------------------------------------------------------------
@@ -282,21 +281,6 @@ Material createLightMaterial(const LightParameter &mat, int index)
 
 void updateMaterialParameters(const std::vector<MaterialParameter> &materials)
 {
-	/*Texture albedo;
-	Texture maps;
-
-	Picture* picture = new Picture;
-	std::string textureFilename = std::string(sutil::samplesDir()) + "/data/luggage/albedo.tga";
-	picture->load(textureFilename);
-	albedo.createSampler(context, picture);
-
-	textureFilename = std::string(sutil::samplesDir()) + "/data/luggage/maps.tga";
-	picture->load(textureFilename);
-	maps.createSampler(context, picture);
-
-	delete picture;*/
-
-
 	MaterialParameter* dst = static_cast<MaterialParameter*>(m_bufferMaterialParameters->map(0, RT_BUFFER_MAP_WRITE_DISCARD));
 	for (size_t i = 0; i < materials.size(); ++i, ++dst) {
 		MaterialParameter mat = materials[i];
@@ -314,8 +298,7 @@ void updateMaterialParameters(const std::vector<MaterialParameter> &materials)
 		dst->clearcoat = mat.clearcoat;
 		dst->clearcoatGloss = mat.clearcoatGloss;
 		dst->brdf = mat.brdf;
-		//dst->albedoID = albedo.getId();
-		//dst->mapID = maps.getId();
+		dst->albedoID = mat.albedoID;
 	}
 	m_bufferMaterialParameters->unmap();
 }
@@ -339,10 +322,6 @@ void updateLightParameters(const std::vector<LightParameter> &lightParameters)
 }
 
 optix::Aabb createGeometry(
-        const std::vector<std::string>& filenames,
-        const std::vector<optix::Matrix4x4>& xforms, 
-        const std::vector<MaterialParameter> &materials,
-		const std::vector<LightParameter> &lights,
         // output: this is a Group with two GeometryGroup children, for toggling visibility later
         optix::Group& top_group
         )
@@ -361,21 +340,21 @@ optix::Aabb createGeometry(
         geometry_group->setAcceleration( context->createAcceleration( "Trbvh" ) );
         top_group->addChild( geometry_group );
 		
-        for (i = 0,j=0; i < filenames.size(); ++i,++j) {
+        for (i = 0,j=0; i < scene->mesh_names.size(); ++i,++j) {
             OptiXMesh mesh;
             mesh.context = context;
             
             // override defaults
             mesh.intersection = context->createProgramFromPTXFile( ptx_path, "mesh_intersect_refine" );
             mesh.bounds = context->createProgramFromPTXFile( ptx_path, "mesh_bounds" );
-            mesh.material = createMaterial(materials[i], i);
+            mesh.material = createMaterial(scene->materials[i], i);
 
-            loadMesh( filenames[i], mesh, xforms[i] ); 
+            loadMesh( scene->mesh_names[i], mesh, scene->transforms[i] ); 
             geometry_group->addChild( mesh.geom_instance );
 
             aabb.include( mesh.bbox_min, mesh.bbox_max );
 
-            std::cerr << filenames[i] << ": " << mesh.num_triangles << std::endl;
+            std::cerr << scene->mesh_names[i] << ": " << mesh.num_triangles << std::endl;
             num_triangles += mesh.num_triangles;
         }
         std::cerr << "Total triangle count: " << num_triangles << std::endl;
@@ -386,13 +365,13 @@ optix::Aabb createGeometry(
 		geometry_group->setAcceleration(context->createAcceleration("NoAccel"));
 		top_group->addChild(geometry_group);
 		
-		for (i = 0; i < lights.size(); ++i)
+		for (i = 0; i < scene->lights.size(); ++i)
 		{
 			GeometryInstance instance;
-			if (lights[i].lightType == QUAD)
-				instance = createQuad(context, createLightMaterial(lights[i], i), lights[i].v1, lights[i].v2, lights[i].position, lights[i].normal);
-			else if (lights[i].lightType == SPHERE)
-				instance = createSphere(context, createLightMaterial(lights[i], i), lights[i].position, lights[i].radius);
+			if (scene->lights[i].lightType == QUAD)
+				instance = createQuad(context, createLightMaterial(scene->lights[i], i), scene->lights[i].v1, scene->lights[i].v2, scene->lights[i].position, scene->lights[i].normal);
+			else if (scene->lights[i].lightType == SPHERE)
+				instance = createSphere(context, createLightMaterial(scene->lights[i], i), scene->lights[i].position, scene->lights[i].radius);
 			geometry_group->addChild(instance);
 		}
 		//GeometryInstance instance = createSphere(context, createMaterial(materials[j], j), optix::make_float3(150, 80, 120), 80);
@@ -627,10 +606,6 @@ int main( int argc, char** argv )
     bool use_pbo  = true;
     std::string scene_file;
 	std::string out_file;
-    std::vector<std::string> mesh_files;
-    std::vector<optix::Matrix4x4> mesh_xforms;
-	std::vector<MaterialParameter> materials;
-	std::vector<LightParameter> lights;
     for( int i=1; i<argc; ++i )
     {
         const std::string arg( argv[i] );
@@ -656,7 +631,7 @@ int main( int argc, char** argv )
 				printUsageAndExit(argv[0]);
 			}
 			scene_file = argv[++i];
-			LoadScene(scene_file.c_str(), mesh_files, mesh_xforms, materials, lights, properties);
+			//LoadScene(scene_file.c_str(), mesh_files, mesh_xforms, materials, lights, properties);
 		}
         else if( arg == "-n" || arg == "--nopbo"  )
         {
@@ -669,24 +644,15 @@ int main( int argc, char** argv )
         }
         else {
             // Interpret argument as a mesh file.
-            mesh_files.push_back( argv[i] );
-            mesh_xforms.push_back( optix::Matrix4x4::identity() );
+            //mesh_files.push_back( argv[i] );
+            //mesh_xforms.push_back( optix::Matrix4x4::identity() );
         }
     }
 
     try
     {
-		if (mesh_files.empty()) {
-
-			// Default scene
-			scene_file = sutil::samplesDir() + std::string("/data/tunnel.scene");
-			LoadScene(scene_file.c_str(), mesh_files, mesh_xforms, materials, lights, properties);
-		}
-
-		/*MaterialParameter mat;
-		mat.brdf = GLASS;
-		mat.color = optix::make_float3(1.0f);
-		materials.push_back(mat);*/
+		properties.width = 1280;
+		properties.height = 720;
 
         GLFWwindow* window = glfwInitialize();
 
@@ -703,21 +669,28 @@ int main( int argc, char** argv )
 
         createContext( use_pbo );
 
+		//if (mesh_files.empty()) {
+
+			// Default scene
+			scene_file = sutil::samplesDir() + std::string("/data/bedroom.scene");
+			scene = LoadScene(scene_file.c_str(), context);
+		//}
+
 		m_bufferLightParameters = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_USER);
 		m_bufferLightParameters->setElementSize(sizeof(LightParameter));
-		m_bufferLightParameters->setSize(lights.size());
-		updateLightParameters(lights);
+		m_bufferLightParameters->setSize(scene->lights.size());
+		updateLightParameters(scene->lights);
 		context["sysLightParameters"]->setBuffer(m_bufferLightParameters);
 		
 		m_bufferMaterialParameters = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_USER);
 		m_bufferMaterialParameters->setElementSize(sizeof(MaterialParameter));
-		m_bufferMaterialParameters->setSize(materials.size());
-		updateMaterialParameters(materials);
+		m_bufferMaterialParameters->setSize(scene->materials.size());
+		updateMaterialParameters(scene->materials);
 		context["sysMaterialParameters"]->setBuffer(m_bufferMaterialParameters);
 
-		context["sysNumberOfLights"]->setInt(lights.size());
+		context["sysNumberOfLights"]->setInt(scene->lights.size());
         optix::Group top_group;
-		const optix::Aabb aabb = createGeometry(mesh_files, mesh_xforms, materials, lights, top_group);
+		const optix::Aabb aabb = createGeometry(top_group);
 
         context->validate();
 

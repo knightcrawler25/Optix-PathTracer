@@ -1,12 +1,7 @@
-properties
-{
-	width 500
-	height 500
-}
-
 material checker
 {
 	color 1.0 1.0 1.0
+	albedoTex luggage/albedo.tga
 }
 
 mesh

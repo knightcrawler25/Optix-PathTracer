@@ -20,18 +20,20 @@ freely, subject to the following restrictions:
 
 static const int kMaxLineLength = 2048;
 
-bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::vector<optix::Matrix4x4> &mesh_xforms,
-	std::vector<MaterialParameter> &materials, std::vector<LightParameter> &lights, Properties &properties)
+Scene* LoadScene(const char* filename, optix::Context &context)
 {
+	Scene *scene = new Scene;
+	int tex_id = 0;
 	FILE* file = fopen(filename, "r");
 
 	if (!file)
 	{
 		printf("Couldn't open %s for reading.", filename);
-		return false;
+		return NULL;
 	}
 
 	std::map<std::string, MaterialParameter> materials_map;
+	std::map<std::string, int> texture_map;
 
 	char line[kMaxLineLength];
 
@@ -53,6 +55,7 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 			printf("%s", line);
 
 			MaterialParameter material;
+			char tex_name[kMaxLineLength] = "None";
 
 			while (fgets(line, kMaxLineLength, file))
 			{
@@ -62,6 +65,7 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 
 				sscanf(line, " name %s", name);
 				sscanf(line, " color %f %f %f", &material.color.x, &material.color.y, &material.color.z);
+				sscanf(line, " albedoTex %s", &tex_name);
 				sscanf(line, " emission %f %f %f", &material.emission.x, &material.emission.y, &material.emission.z);
 
 				sscanf(line, " metallic %f", &material.metallic);
@@ -75,6 +79,26 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 				sscanf(line, " clearcoat %f", &material.clearcoat);
 				sscanf(line, " clearcoatGloss %f", &material.clearcoatGloss);
 				sscanf(line, " brdf %i", &material.brdf);
+			}
+
+			// Check if texture is already loaded
+			if (texture_map.find(tex_name) != texture_map.end()) // Found Texture
+			{
+				material.albedoID = scene->textures[texture_map[tex_name]].getId();
+			}
+			else if(strcmp(tex_name, "None") != 0)
+			{
+				texture_map[tex_name] = tex_id++;
+				Texture tex;
+				Picture* picture = new Picture;
+				std::string textureFilename = std::string(sutil::samplesDir()) + "/data/" + tex_name;
+				std::cout << textureFilename<< std::endl;
+				picture->load(textureFilename);
+				tex.createSampler(context, picture);
+				scene->textures.push_back(tex);
+				material.albedoID = tex.getId();
+				delete picture;
+				
 			}
 
 			// add material to map
@@ -100,17 +124,17 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 				sscanf(line, " normal %f %f %f", &light.normal.x, &light.normal.y, &light.normal.z);
 
 				sscanf(line, " radius %f", &light.radius);
-				sscanf(line, " u %f %f %f", &light.v1.x, &light.v1.y, &light.v1.z);
-				sscanf(line, " v %f %f %f", &light.v2.x, &light.v2.y, &light.v2.z);
-				//sscanf(line, " u %f %f %f", &u.x, &u.y, &u.z);
-				//sscanf(line, " v %f %f %f", &v.x, &v.y, &v.z);
+				//sscanf(line, " u %f %f %f", &light.v1.x, &light.v1.y, &light.v1.z);
+				//sscanf(line, " v %f %f %f", &light.v2.x, &light.v2.y, &light.v2.z);
+				sscanf(line, " u %f %f %f", &u.x, &u.y, &u.z);
+				sscanf(line, " v %f %f %f", &v.x, &v.y, &v.z);
 				sscanf(line, " type %i", &light.lightType);
 			}
 
 			if (light.lightType == QUAD)
 			{
-				//light.v1 = u - light.position;
-				//light.v2 = v - light.position;
+				light.v1 = u - light.position;
+				light.v2 = v - light.position;
 				light.area = optix::length(optix::cross(light.v1, light.v2));
 				light.normal = optix::normalize(optix::cross(light.v1, light.v2));
 			}
@@ -120,7 +144,7 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 				light.area = 4.0f * M_PIf * light.radius * light.radius;
 			}
 
-			lights.push_back(light);
+			scene->lights.push_back(light);
 		}
 
 		//--------------------------------------------
@@ -141,7 +165,7 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 				sscanf(line, " width %i", &prop.width);
 				sscanf(line, " height %i", &prop.height);
 			}
-			properties = prop;
+			scene->properties = prop;
 		}
 
 		//--------------------------------------------
@@ -162,8 +186,8 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 				if (sscanf(line, " file %s", path) == 1)
 				{
 					const optix::Matrix4x4 xform = optix::Matrix4x4::identity();// optix::Matrix4x4::rotate(-M_PIf / 2.0f, optix::make_float3(0.0f, 1.0f, 0.0f)
-					mesh_files.push_back(std::string(sutil::samplesDir()) + "/data/" + path);
-					mesh_xforms.push_back(xform);
+					scene->mesh_names.push_back(std::string(sutil::samplesDir()) + "/data/" + path);
+					scene->transforms.push_back(xform);
 				}
 
 				if (sscanf(line, " material %s", path) == 1)
@@ -171,17 +195,15 @@ bool LoadScene(const char* filename, std::vector<std::string> &mesh_files, std::
 					// look up material in dictionary
 					if (materials_map.find(path) != materials_map.end())
 					{
-						materials.push_back(materials_map[path]);
+						scene->materials.push_back(materials_map[path]);
 					}
 					else
 					{
 						printf("Could not find material %s\n", path);
 					}
 				}
-
 			}
 		}
 	}
-
-	return true;
+	return scene;
 }

@@ -2,8 +2,7 @@
 OptixPathTracer
 ==========
 
-![Spaceship](./spaceship.png)
-Render Time: 6 minutes on a GTX 750ti
+![Bedroom](./bedroom.png)
 
 A physically based path tracer with support for Disney BRDF.
 
@@ -24,7 +23,12 @@ Features
 
 Following are some scenes rendered with the path tracer
 --------
-[Stormtrooper](https://www.blendswap.com/blends/view/76637) (Render Time: ~4 minutes)  
+Spaceship (Render Time: ~6 minutes on a GTX 750ti)  
+Original model: (https://www.blendswap.com/blends/view/75686)
+![Spaceship](./spaceship.png)
+
+Stormtrooper (Render Time: ~4 minutes)  
+Original model: (https://www.blendswap.com/blends/view/76637) 
 ![Stormtrooper](./stormtrooper.png)
 
 [Coffee Pot](https://benedikt-bitterli.me/resources) (Render Time: 4 minutes. 1k spp)

@@ -1,0 +1,630 @@
+material Boxes
+{
+	color 0.483044 0.384664 0.301561
+}
+
+material PlasticCable
+{
+	color 0.558543 0.558543 0.558543
+}
+
+material LampEmitter
+{
+	color 0.64 0.64 0.64
+}
+
+material Blankets
+{
+	color 0.485435 0.456263 0.428075
+}
+
+material Bedsheets
+{
+	albedoTex bedroom/textures/wallpaper-1.jpg
+}
+
+material Window
+{
+	color 0.48173 0.48173 0.48173
+}
+
+material PictureBacking
+{
+	color 0.111567 0.037068 0.017016
+}
+
+material Picture
+{
+	albedoTex bedroom/textures/Teapot.png
+}
+
+material Rocks1
+{
+	color 0.350827 0.242986 0.17883
+}
+
+material Rocks2
+{
+	color 0.098964 0.098964 0.098964
+}
+
+
+material Rocks3
+{
+	color 0.558544 0.558544 0.558544
+}
+
+
+material DecoPlant
+{
+	color 0.041772 0.011306 0.007575
+}
+
+material Painting1
+{
+	albedoTex bedroom/textures/painting1.jpg
+	color 0.015396 0.015396 0.015396
+}
+
+material Painting2
+{
+	albedoTex bedroom/textures/painting2.jpg
+	color 0.015396 0.015396 0.015396
+}
+
+material Painting3
+{
+	albedoTex bedroom/textures/painting3.jpg
+	color 0.015396 0.015396 0.015396
+}
+
+material Carpet
+{
+	color 0.034499 0.034499 0.034499
+}
+
+material Matress
+{
+	color 0.893289 0.893289 0.893289
+}
+
+material WoodFloor
+{
+	albedoTex bedroom/textures/wood4.jpg
+	roughness 0.15
+}
+
+material Walls
+{
+	color 0.799999 0.799999 0.799999
+}
+
+material Walls2
+{
+	color 0.799999 0.799999 0.799999
+}
+
+
+material WoodFurniture
+{
+	albedoTex bedroom/textures/panel-wood-3.jpg
+	roughness 0.15
+}
+
+material Mirror
+{
+	color 1.0 1.0 1.0
+	roughness 0.0
+	metallic 1.0
+}
+
+material Aluminium
+{
+	color 1.0 1.0 1.0
+	roughness 0.2
+	metallic 1.0
+}
+
+material BookCover
+{
+	color 0 0 0
+}
+
+material BookPages
+{
+	color 0.567027 0.567027 0.567027
+}
+
+material LampMetal
+{
+	color 1.0 1.0 1.0
+	roughness 0.1
+}
+
+material Vase
+{
+	color 1.0 1.0 1.0
+	brdf 1
+}
+
+material Glass
+{
+	color 1.0 1.0 1.0
+	brdf 1
+}
+
+material PictureFrame
+{
+	color 1.0 1.0 1.0
+	roughness 0.1
+	metallic 1.0
+}
+
+material CurtainRod
+{
+	color 0.5 0.5 0.5
+	roughness 0.1
+	metallic 1.0
+}
+
+material Curtains
+{
+	color 0.531049 0.531049 0.531049
+}
+
+material StainlessSmooth
+{
+	color 1.0 1.0 1.0
+	roughness 0.0
+	metallic 1.0
+}
+
+mesh
+{
+	file bedroom/Mesh044.obj
+	material Aluminium
+}
+
+mesh
+{
+	file bedroom/Mesh047.obj
+	material Aluminium
+}
+
+mesh
+{
+	file bedroom/Mesh032.obj
+	material WoodFurniture
+}
+
+mesh
+{
+	file bedroom/Mesh028.obj
+	material StainlessSmooth
+}
+
+mesh
+{
+	file bedroom/Mesh046.obj
+	material Aluminium
+}
+
+mesh
+{
+	file bedroom/Mesh027.obj
+	material Aluminium
+}
+
+
+mesh
+{
+	file bedroom/Mesh022.obj
+	material Aluminium
+}
+
+mesh
+{
+	file bedroom/Mesh042.obj
+	material Aluminium
+}
+
+
+mesh
+{
+	file bedroom/Mesh036.obj
+	material Aluminium
+}
+
+
+mesh
+{
+	file bedroom/Mesh043.obj
+	material Aluminium
+}
+
+
+mesh
+{
+	file bedroom/Mesh040.obj
+	material Aluminium
+}
+
+mesh
+{
+	file bedroom/Mesh037.obj
+	material Glass
+}
+
+mesh
+{
+	file bedroom/Mesh026.obj
+	material Glass
+}
+
+mesh
+{
+	file bedroom/Mesh023.obj
+	material LampMetal
+}
+
+
+mesh
+{
+	file bedroom/Mesh059.obj
+	material LampEmitter
+}
+
+mesh
+{
+	file bedroom/Mesh049.obj
+	material Glass
+}
+
+mesh
+{
+	file bedroom/Mesh060.obj
+	material WoodFloor
+}
+
+mesh
+{
+	file bedroom/Mesh033.obj
+	material DecoPlant
+}
+
+mesh
+{
+	file bedroom/Mesh025.obj
+	material Rocks1
+}
+
+mesh
+{
+	file bedroom/Mesh055.obj
+	material Rocks2
+}
+
+mesh
+{
+	file bedroom/Mesh035.obj
+	material Rocks3
+}
+
+mesh
+{
+	file bedroom/Mesh048.obj
+	material Glass
+}
+
+mesh
+{
+	file bedroom/Mesh056.obj
+	material LampMetal
+}
+
+mesh
+{
+	file bedroom/Mesh058.obj
+	material PlasticCable
+}
+
+
+mesh
+{
+	file bedroom/Mesh061.obj
+	material LampEmitter
+}
+
+mesh
+{
+	file bedroom/Mesh051.obj
+	material Glass
+}
+
+mesh
+{
+	file bedroom/Mesh066.obj
+	material LampMetal
+}
+
+mesh
+{
+	file bedroom/Mesh062.obj
+	material PlasticCable
+}
+
+mesh
+{
+	file bedroom/Mesh054.obj
+	material LampEmitter
+}
+
+
+mesh
+{
+	file bedroom/Mesh063.obj
+	material BookCover
+}
+
+mesh
+{
+	file bedroom/Mesh064.obj
+	material BookPages
+}
+
+#mesh
+{
+	file bedroom/Mesh057.obj
+	material Curtains
+}
+
+mesh
+{
+	file bedroom/Mesh041.obj
+	material Bedsheets
+}
+
+mesh
+{
+	file bedroom/Mesh052.obj
+	material Glass
+}
+
+mesh
+{
+	file bedroom/Mesh065.obj
+	material Vase
+}
+
+mesh
+{
+	file bedroom/Mesh067.obj
+	material Vase
+}
+
+mesh
+{
+	file bedroom/Mesh068.obj
+	material Bedsheets
+}
+
+mesh
+{
+	file bedroom/Mesh034.obj
+	material Bedsheets
+}
+
+mesh
+{
+	file bedroom/Mesh021.obj
+	material Matress
+}
+
+mesh
+{
+	file bedroom/Mesh020.obj
+	material Carpet
+}
+
+
+mesh
+{
+	file bedroom/Mesh019.obj
+	material Carpet
+}
+
+mesh
+{
+	file bedroom/Mesh018.obj
+	material Painting1
+}
+
+mesh
+{
+	file bedroom/Mesh017.obj
+	material Painting2
+}
+
+mesh
+{
+	file bedroom/Mesh069.obj
+	material Painting3
+}
+
+mesh
+{
+	file bedroom/Mesh015.obj
+	material CurtainRod
+}
+
+mesh
+{
+	file bedroom/Mesh014.obj
+	material CurtainRod
+}
+
+mesh
+{
+	file bedroom/Mesh012.obj
+	material WoodFurniture
+}
+
+mesh
+{
+	file bedroom/Mesh011.obj
+	material Mirror
+}
+
+mesh
+{
+	file bedroom/Mesh013.obj
+	material Walls
+}
+
+
+mesh
+{
+	file bedroom/Mesh039.obj
+	material Window
+}
+
+mesh
+{
+	file bedroom/Mesh010.obj
+	material Window
+}
+
+mesh
+{
+	file bedroom/Mesh031.obj
+	material WoodFurniture
+}
+
+mesh
+{
+	file bedroom/Mesh045.obj
+	material StainlessSmooth
+}
+
+mesh
+{
+	file bedroom/Mesh038.obj
+	material Mirror
+}
+
+mesh
+{
+	file bedroom/Mesh009.obj
+	material WoodFurniture
+}
+
+
+mesh
+{
+	file bedroom/Mesh024.obj
+	material StainlessSmooth
+}
+
+mesh
+{
+	file bedroom/Mesh030.obj
+	material WoodFurniture
+}
+
+mesh
+{
+	file bedroom/Mesh029.obj
+	material StainlessSmooth
+}
+
+mesh
+{
+	file bedroom/Mesh008.obj
+	material Walls2
+}
+
+mesh
+{
+	file bedroom/Mesh007.obj
+	material WoodFurniture
+}
+
+
+mesh
+{
+	file bedroom/Mesh006.obj
+	material WoodFurniture
+}
+
+mesh
+{
+	file bedroom/Mesh005.obj
+	material StainlessSmooth
+}
+
+#mesh
+{
+	file bedroom/Mesh004.obj
+	material Curtains
+}
+
+mesh
+{
+	file bedroom/Mesh050.obj
+	material PictureFrame
+}
+
+mesh
+{
+	file bedroom/Mesh053.obj
+	material PictureBacking
+}
+
+mesh
+{
+	file bedroom/Mesh003.obj
+	material Picture
+}
+
+mesh
+{
+	file bedroom/Mesh002.obj
+	material Boxes
+}
+
+mesh
+{
+	file bedroom/Mesh016.obj
+	material Blankets
+}
+
+mesh
+{
+	file bedroom/Mesh001.obj
+	material Blankets
+}
+
+mesh
+{
+	file bedroom/Mesh000.obj
+	material Blankets
+}
+
+
+light
+{
+	position -2.00785 0.281886 -1.26735 
+	u -0.943027 0.281886 -1.26735
+	v -2.00785 2.09747 -1.26735
+	emission 16.4648 16.4648 16.4648
+	type 1
+}
+
+light
+{
+	position 0.911384 0.281886 -1.26735 
+	u 1.9762 0.281886 -1.26735
+	v 0.911384 2.09747 -1.26735
+	emission 16.4648 16.4648 16.4648
+	type 1
+}
