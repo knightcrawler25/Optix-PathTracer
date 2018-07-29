@@ -2,7 +2,7 @@
 OptixPathTracer
 ==========
 
-![Bedroom](./bedroom.png)
+![Dining Room](./dining.png)
 
 A physically based path tracer with support for Disney BRDF.
 
@@ -23,6 +23,9 @@ Features
 
 Following are some scenes rendered with the path tracer
 --------
+[Bedroom](https://benedikt-bitterli.me/resources)
+![Bedroom](./bedroom.png)
+
 [Spaceship](https://www.blendswap.com/blends/view/75686) (Render Time: ~6 minutes on a GTX 750ti)
 ![Spaceship](./spaceship.png)
 

@@ -1,0 +1,487 @@
+material BlackPlastic
+{
+	color 0.005	0.005 0.005
+	roughness 0.2
+}
+
+material StainlessSteel
+{
+	roughness 0.0
+	metallic 1.0
+}
+
+material Aluminium
+{
+	color 1.0 1.0 1.0
+	roughness 0.15
+	metallic 1.0
+}
+
+material Glass
+{
+	color 0.713 0.8 0.8
+	brdf 1
+}
+
+material Ceramic
+{
+	color 0.787 0.758 0.737
+	roughness 0.0
+	specular 0.8
+}
+
+material WoodenFloor
+{
+	albedoTex diningroom/textures/floor.jpg
+	roughness 0.05
+}
+
+material WoodenBox
+{
+	albedoTex diningroom/textures/box.jpg
+	roughness 0.1
+}
+
+material Painting
+{
+	albedoTex diningroom/textures/painting.jpg
+}
+
+material Walls
+{
+	color 0.842 0.842 0.842
+	roughness 0.2
+}
+
+material Green
+{
+	color 0.016 0.047 0.002
+	roughness 0.2
+}
+
+material DarkGlossy
+{
+	color 0.009 0.009 0.009
+	roughness 0.05
+}
+
+material ShelfBookCover1
+{
+	albedoTex diningroom/textures/shelfbook1.jpg
+}
+
+material ShelfBookCover2
+{
+	albedoTex diningroom/textures/shelfbook2.jpg
+}
+
+material Book1
+{
+	albedoTex diningroom/textures/book1.jpg
+}
+
+
+material Book2
+{
+	albedoTex diningroom/textures/book2.jpg
+}
+
+
+material Book3
+{
+	albedoTex diningroom/textures/book3.jpg
+}
+
+
+material Book4
+{
+	albedoTex diningroom/textures/book4.jpg
+}
+
+
+material Book6
+{
+	albedoTex diningroom/textures/book6.jpg
+}
+
+material Book7
+{
+	albedoTex diningroom/textures/book7.jpg
+}
+
+
+material Book8
+{
+	albedoTex diningroom/textures/book8.jpg
+}
+
+
+material Book9
+{
+	albedoTex diningroom/textures/book9.jpg
+}
+
+
+material Book10
+{
+	albedoTex diningroom/textures/book10.jpg
+}
+
+
+material Book11
+{
+	albedoTex diningroom/textures/book11.jpg
+}
+
+
+material Book14
+{
+	albedoTex diningroom/textures/book14.jpg
+}
+
+
+material Book15
+{
+	albedoTex diningroom/textures/book15.jpg
+}
+
+
+material Book16
+{
+	albedoTex diningroom/textures/book16.jpg
+}
+
+
+material Book17
+{
+	albedoTex diningroom/textures/book17.jpg
+}
+
+
+material Book18
+{
+	albedoTex diningroom/textures/book18.jpg
+}
+
+
+mesh
+{
+	file diningroom/bucket1.obj
+	material WoodenBox
+}
+
+mesh
+{
+	file diningroom/bucket2.obj
+	material WoodenBox
+}
+
+mesh
+{
+	file diningroom/bucket3.obj
+	material WoodenBox
+}
+
+mesh
+{
+	file diningroom/bucket4.obj
+	material WoodenBox
+}
+
+mesh
+{
+	file diningroom/chair_legs.obj
+	material StainlessSteel
+}
+
+mesh
+{
+	file diningroom/chair_nuts.obj
+	material StainlessSteel
+}
+
+mesh
+{
+	file diningroom/chair_rubber_pegs.obj
+	material BlackPlastic
+}
+
+mesh
+{
+	file diningroom/chair_seats.obj
+	material BlackPlastic
+}
+
+mesh
+{
+	file diningroom/cupboards.obj
+	material DarkGlossy
+}
+
+mesh
+{
+	file diningroom/floor.obj
+	material WoodenFloor
+}
+
+mesh
+{
+	file diningroom/floor_frame.obj
+	material WoodenFloor
+}
+
+mesh
+{
+	file diningroom/frame1.obj
+	material StainlessSteel
+}
+
+mesh
+{
+	file diningroom/frame2.obj
+	material StainlessSteel
+}
+
+mesh
+{
+	file diningroom/left_front_wall.obj
+	material Walls
+}
+
+mesh
+{
+	file diningroom/rightwall.obj
+	material Green
+}
+
+mesh
+{
+	file diningroom/picture1.obj
+	material Painting
+}
+
+mesh
+{
+	file diningroom/picture2.obj
+	material Painting
+}
+
+mesh
+{
+	file diningroom/plant.obj
+	material DarkGlossy
+}
+
+mesh
+{
+	file diningroom/shelf.obj
+	material Walls
+}
+
+mesh
+{
+	file diningroom/table_glass.obj
+	material Glass
+}
+
+mesh
+{
+	file diningroom/table_legs.obj
+	material Aluminium
+}
+
+mesh
+{
+	file diningroom/vase.obj
+	material Ceramic
+}
+
+mesh
+{
+	file diningroom/shelf_book1.obj
+	material ShelfBookCover1
+}
+
+mesh
+{
+	file diningroom/shelf_book2.obj
+	material ShelfBookCover2
+}
+
+mesh
+{
+	file diningroom/shelf_objects.obj
+	material Aluminium
+}
+
+mesh
+{
+	file diningroom/shelf_object2.obj
+	material DarkGlossy
+}
+
+mesh
+{
+	file diningroom/book1.obj
+	material Book1
+}
+
+mesh
+{
+	file diningroom/book2.obj
+	material Book2
+}
+
+mesh
+{
+	file diningroom/book3.obj
+	material Book3
+}
+
+mesh
+{
+	file diningroom/book4.obj
+	material Book4
+}
+
+mesh
+{
+	file diningroom/book5.obj
+	material ShelfBookCover1
+}
+
+mesh
+{
+	file diningroom/book6.obj
+	material Book6
+}
+
+mesh
+{
+	file diningroom/book7.obj
+	material Book7
+}
+
+mesh
+{
+	file diningroom/book8.obj
+	material Book8
+}
+
+mesh
+{
+	file diningroom/book9.obj
+	material Book9
+}
+
+mesh
+{
+	file diningroom/book10.obj
+	material Book10
+}
+
+mesh
+{
+	file diningroom/book11.obj
+	material Book11
+}
+
+mesh
+{
+	file diningroom/book12.obj
+	material ShelfBookCover2
+}
+
+mesh
+{
+	file diningroom/book13.obj
+	material Book3
+}
+
+mesh
+{
+	file diningroom/book14.obj
+	material Book14
+}
+
+mesh
+{
+	file diningroom/book15.obj
+	material Book15
+}
+
+mesh
+{
+	file diningroom/book16.obj
+	material Book16
+}
+
+mesh
+{
+	file diningroom/book17.obj
+	material Book17
+}
+
+mesh
+{
+	file diningroom/book18.obj
+	material Book18
+}
+
+
+
+light
+{
+	position -1.698293 4.893044 3.361581
+	u -1.698293 4.893044 -3.194531
+	v 1.917820 4.893044 3.361581
+	emission 1 1 1
+	type 1
+}
+
+light
+{
+	position -1.910558 0.434611 -2.445509
+	u -0.970558 0.434611 -2.445509
+	v -1.910558 2.114611 -2.445509
+	emission 4 4.5 5
+	type 1
+}
+
+light
+{
+	position -0.761083 0.434611 -2.446883
+	u 0.178917 0.434611 -2.446883
+	v -0.761083 2.114611 -2.446883
+	emission 4 4.5 5
+	type 1
+}
+
+light
+{
+	position 0.398842 0.434611 -2.450588
+	u 1.338842 0.434611 -2.450588
+	v 0.398842 2.114611 -2.450588
+	emission 4 4.5 5
+	type 1
+}
+
+light
+{
+	position -4.376347 3.258564 3.033338
+	u -4.991669 0.122242 3.033338
+	v -4.376347 3.258564 -2.822774
+	emission 0.8 0.75 0.7
+	type 1
+}
+
+light
+{
+	position -4.765844 -0.129837 -0.727901
+	u -3.543804 -0.398520 -2.869122
+	v -3.872545 3.933120 -0.727901
+	emission 1.0 0.77 0.65
+	type 1
+}
+
+

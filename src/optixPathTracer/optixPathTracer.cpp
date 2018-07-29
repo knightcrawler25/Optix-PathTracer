@@ -672,7 +672,7 @@ int main( int argc, char** argv )
 		//if (mesh_files.empty()) {
 
 			// Default scene
-			scene_file = sutil::samplesDir() + std::string("/data/bedroom.scene");
+			scene_file = sutil::samplesDir() + std::string("/data/diningroom.scene");
 			scene = LoadScene(scene_file.c_str(), context);
 		//}
 

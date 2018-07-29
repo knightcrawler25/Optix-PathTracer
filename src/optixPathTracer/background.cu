@@ -63,6 +63,6 @@ RT_PROGRAM void miss()
 		//prd_radiance.radiance = make_float3(0.0f);
 	//else
 	//prd.radiance += make_float3(0.5f,0.7,0.8f) * prd.throughput;
-	prd.radiance += make_float3(0.5f, 0.7, 0.8f) * prd.throughput * 0.2;
+	prd.radiance += make_float3(0.5f, 0.7, 0.8f) * prd.throughput * 0.0;
 	prd.done = true;
 }
