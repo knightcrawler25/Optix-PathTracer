@@ -3,6 +3,7 @@ OptixPathTracer
 ==========
 
 ![Dining Room](./dining.png)
+[Dining Room](https://www.blendswap.com/blends/view/86457)
 
 A physically based path tracer with support for Disney BRDF.
 
