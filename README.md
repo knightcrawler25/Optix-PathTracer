@@ -13,7 +13,7 @@ can be done in a much better way please do share :)
 
 Features
 --------
-( Most were part of existing code from the Nvidia's Optix Advanced Samples Repository on Github )  
+( Almost all were part of existing code from the Nvidia's Optix Advanced Samples Repository on Github )  
 - Unidirectional Path Tracing  
 - Disney BRDF  
 - Simple Glass BTDF  
@@ -21,6 +21,8 @@ Features
 - Multiple Importance Sampling  
 - Mesh Loading
 - Simple Scene File (Basically stolen from Miles Macklin's excellent [Tinsel renderer](https://github.com/mmacklin/tinsel) ) so all credits go to him.
+
+For the modified .obj files that go with the scene files, unzip the data.rar file in src/data/ into the same folder
 
 Following are some scenes rendered with the path tracer
 --------
