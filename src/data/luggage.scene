@@ -12,7 +12,7 @@ mesh
 
 light
 {
-	type 0
+	type Sphere
 	position 100 100 100
 	emission 1000 1000 1000
 	radius 5

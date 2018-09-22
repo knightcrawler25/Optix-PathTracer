@@ -65,7 +65,7 @@ RT_CALLABLE_PROGRAM void quad_sample(LightParameter &light, PerRayData_radiance 
 {
 	const float r1 = rnd(prd.seed);
 	const float r2 = rnd(prd.seed);
-	sample.surfacePos = light.position + light.v1 * r1 + light.v2 * r2;
+	sample.surfacePos = light.position + light.u * r1 + light.v * r2;
 	sample.normal = light.normal;
 	sample.emission = light.emission * sysNumberOfLights;
 }

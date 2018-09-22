@@ -20,7 +20,7 @@ freely, subject to the following restrictions:
 
 static const int kMaxLineLength = 2048;
 
-Scene* LoadScene(const char* filename, optix::Context &context)
+Scene* LoadScene(const char* filename)
 {
 	Scene *scene = new Scene;
 	int tex_id = 0;
@@ -33,7 +33,7 @@ Scene* LoadScene(const char* filename, optix::Context &context)
 	}
 
 	std::map<std::string, MaterialParameter> materials_map;
-	std::map<std::string, int> texture_map;
+	std::map<std::string, int> texture_ids;
 
 	char line[kMaxLineLength];
 
@@ -82,23 +82,16 @@ Scene* LoadScene(const char* filename, optix::Context &context)
 			}
 
 			// Check if texture is already loaded
-			if (texture_map.find(tex_name) != texture_map.end()) // Found Texture
+			if (texture_ids.find(tex_name) != texture_ids.end()) // Found Texture
 			{
-				material.albedoID = scene->textures[texture_map[tex_name]].getId();
+				material.albedoID = texture_ids[tex_name];
 			}
 			else if(strcmp(tex_name, "None") != 0)
 			{
-				texture_map[tex_name] = tex_id++;
-				Texture tex;
-				Picture* picture = new Picture;
-				std::string textureFilename = std::string(sutil::samplesDir()) + "/data/" + tex_name;
-				std::cout << textureFilename<< std::endl;
-				picture->load(textureFilename);
-				tex.createSampler(context, picture);
-				scene->textures.push_back(tex);
-				material.albedoID = tex.getId();
-				delete picture;
-				
+				tex_id++;
+				texture_ids[tex_name] = tex_id;
+				scene->texture_map[tex_id - 1] = tex_name;
+				material.albedoID = tex_id;
 			}
 
 			// add material to map
@@ -111,7 +104,8 @@ Scene* LoadScene(const char* filename, optix::Context &context)
 		if (strstr(line, "light"))
 		{
 			LightParameter light;
-			optix::float3 u, v;
+			optix::float3 v1, v2;
+			char light_type[20] = "None";
 
 			while (fgets(line, kMaxLineLength, file))
 			{
@@ -126,20 +120,22 @@ Scene* LoadScene(const char* filename, optix::Context &context)
 				sscanf(line, " radius %f", &light.radius);
 				//sscanf(line, " u %f %f %f", &light.v1.x, &light.v1.y, &light.v1.z);
 				//sscanf(line, " v %f %f %f", &light.v2.x, &light.v2.y, &light.v2.z);
-				sscanf(line, " u %f %f %f", &u.x, &u.y, &u.z);
-				sscanf(line, " v %f %f %f", &v.x, &v.y, &v.z);
-				sscanf(line, " type %i", &light.lightType);
+				sscanf(line, " v1 %f %f %f", &v1.x, &v1.y, &v1.z);
+				sscanf(line, " v2 %f %f %f", &v2.x, &v2.y, &v2.z);
+				sscanf(line, " type %s", light_type);
 			}
 
-			if (light.lightType == QUAD)
+			if (strcmp(light_type, "Quad") == 0)
 			{
-				light.v1 = u - light.position;
-				light.v2 = v - light.position;
-				light.area = optix::length(optix::cross(light.v1, light.v2));
-				light.normal = optix::normalize(optix::cross(light.v1, light.v2));
+				light.lightType = QUAD;
+				light.u = v1 - light.position;
+				light.v = v2 - light.position;
+				light.area = optix::length(optix::cross(light.u, light.v));
+				light.normal = optix::normalize(optix::cross(light.u, light.v));
 			}
-			else if (light.lightType == SPHERE)
+			else if (strcmp(light_type, "Sphere") == 0)
 			{
+				light.lightType = SPHERE;
 				light.normal = optix::normalize(light.normal);
 				light.area = 4.0f * M_PIf * light.radius * light.radius;
 			}
@@ -150,11 +146,14 @@ Scene* LoadScene(const char* filename, optix::Context &context)
 		//--------------------------------------------
 		// Properties
 
+		//Defaults
+		Properties prop;
+		prop.width = 1280;
+		prop.height = 720;
+		scene->properties = prop;
+
 		if (strstr(line, "properties"))
 		{
-			Properties prop;
-			prop.width = 1280;
-			prop.height = 720;
 
 			while (fgets(line, kMaxLineLength, file))
 			{

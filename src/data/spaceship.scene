@@ -80,20 +80,20 @@ material Light2
 
 light
 {
-	type 1
+	type Quad
 	position -2.04973 5.14472 0.974365
-	u 4.09 0 0
-	v 0 0 1.277
+	v1 2.040 5.14472 0.974365  
+	v2 -2.04973 5.14472 2.251        
 	emission 9 9 10
 	
 }
 
 light
 {
-	type 1
+	type Quad
 	position -2.04973 5.14472 -2.24722 
-	u 4.09 0 0
-	v 0 0 1.277
+	v1 2.040 5.14472 -2.24722 
+	v2 -2.04973 5.14472 -0.97
 	emission 9 9 10
 }
 

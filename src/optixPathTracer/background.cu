@@ -53,16 +53,16 @@ rtTextureSampler<float4, 2> envmap;
 
 RT_PROGRAM void miss()
 {
-	float theta = atan2f(ray.direction.x, ray.direction.z);
+	/*float theta = atan2f(ray.direction.x, ray.direction.z);
 	float phi = M_PIf * 0.5f - acosf(ray.direction.y);
 	float u = (theta + M_PIf) * (0.5f * M_1_PIf);
 	float v = 0.5f * (1.0f + sin(phi));
-	float3 result = make_float3(tex2D(envmap, u, v));
+	float3 result = make_float3(tex2D(envmap, u, v));*/
 
 	//if (prd_radiance.depth == 0)
 		//prd_radiance.radiance = make_float3(0.0f);
 	//else
 	//prd.radiance += make_float3(0.5f,0.7,0.8f) * prd.throughput;
-	prd.radiance += make_float3(0.5f, 0.7, 0.8f) * prd.throughput * 0.0;
+	//prd.radiance += make_float3(0.5f, 0.7, 0.8f) * prd.throughput * 0.0;
 	prd.done = true;
 }

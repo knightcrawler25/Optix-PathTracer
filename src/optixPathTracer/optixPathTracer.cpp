@@ -178,12 +178,12 @@ void createContext( bool use_pbo )
     context["frame"]->setUint( 0u );
     context["scene_epsilon"]->setFloat( 1.e-3f );
 
-    Buffer buffer = sutil::createOutputBuffer( context, RT_FORMAT_UNSIGNED_BYTE4, properties.width, properties.height, use_pbo );
+    Buffer buffer = sutil::createOutputBuffer( context, RT_FORMAT_UNSIGNED_BYTE4, scene->properties.width, scene->properties.height, use_pbo );
     context["output_buffer"]->set( buffer );
 
     // Accumulation buffer
     Buffer accum_buffer = context->createBuffer( RT_BUFFER_INPUT_OUTPUT | RT_BUFFER_GPU_LOCAL,
-            RT_FORMAT_FLOAT4, properties.width, properties.height);
+            RT_FORMAT_FLOAT4, scene->properties.width, scene->properties.height);
     context["accum_buffer"]->set( accum_buffer );
 
     // Ray generation program
@@ -313,8 +313,8 @@ void updateLightParameters(const std::vector<LightParameter> &lightParameters)
 		dst->emission = mat.emission;
 		dst->radius = mat.radius;
 		dst->area = mat.area;
-		dst->v1 = mat.v1;
-		dst->v2 = mat.v2;
+		dst->u = mat.u;
+		dst->v = mat.v;
 		dst->normal = mat.normal;
 		dst->lightType = mat.lightType;
 	}
@@ -369,7 +369,7 @@ optix::Aabb createGeometry(
 		{
 			GeometryInstance instance;
 			if (scene->lights[i].lightType == QUAD)
-				instance = createQuad(context, createLightMaterial(scene->lights[i], i), scene->lights[i].v1, scene->lights[i].v2, scene->lights[i].position, scene->lights[i].normal);
+				instance = createQuad(context, createLightMaterial(scene->lights[i], i), scene->lights[i].u, scene->lights[i].v, scene->lights[i].position, scene->lights[i].normal);
 			else if (scene->lights[i].lightType == SPHERE)
 				instance = createSphere(context, createLightMaterial(scene->lights[i], i), scene->lights[i].position, scene->lights[i].radius);
 			geometry_group->addChild(instance);
@@ -474,7 +474,7 @@ GLFWwindow* glfwInitialize( )
     // Note: this overrides imgui key callback with our own.  We'll chain this.
     glfwSetKeyCallback( window, keyCallback );
 
-    glfwSetWindowSize( window, (int)properties.width, (int)properties.height);
+    glfwSetWindowSize( window, (int)scene->properties.width, (int)scene->properties.height);
     glfwSetWindowSizeCallback( window, windowSizeCallback );
 
     return window;
@@ -489,7 +489,7 @@ void glfwRun( GLFWwindow* window, sutil::Camera& camera, const optix::Group top_
     glOrtho(0, 1, 0, 1, -1, 1 );
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glViewport(0, 0, properties.width, properties.height);
+    glViewport(0, 0, scene->properties.width, scene->properties.height);
 
     unsigned int frame_count = 0;
     unsigned int accumulation_frame = 0;
@@ -583,18 +583,18 @@ void glfwRun( GLFWwindow* window, sutil::Camera& camera, const optix::Group top_
 
 void printUsageAndExit( const std::string& argv0 )
 {
-    std::cerr << "\nUsage: " << argv0 << " [options] [mesh0 mesh1 ...]\n";
+    std::cerr << "\nUsage: " << argv0 << " [options]\n";
     std::cerr <<
         "App Options:\n"
         "  -h | --help                  Print this usage message and exit.\n"
         "  -f | --file <output_file>    Save image to file and exit.\n"
         "  -n | --nopbo                 Disable GL interop for display buffer.\n"
+		"  -s | --scene                 Provide a scene file for rendering.\n"
         "App Keystrokes:\n"
         "  q  Quit\n"
         "  s  Save image to '" << SAMPLE_NAME << ".png'\n"
         "  f  Re-center camera\n"
         "\n"
-        "Mesh files are optional and can be OBJ or PLY.\n"
         << std::endl;
 
     exit(1);
@@ -631,7 +631,6 @@ int main( int argc, char** argv )
 				printUsageAndExit(argv[0]);
 			}
 			scene_file = argv[++i];
-			//LoadScene(scene_file.c_str(), mesh_files, mesh_xforms, materials, lights, properties);
 		}
         else if( arg == "-n" || arg == "--nopbo"  )
         {
@@ -642,40 +641,57 @@ int main( int argc, char** argv )
             std::cerr << "Unknown option '" << arg << "'\n";
             printUsageAndExit( argv[0] );
         }
-        else {
-            // Interpret argument as a mesh file.
-            //mesh_files.push_back( argv[i] );
-            //mesh_xforms.push_back( optix::Matrix4x4::identity() );
-        }
     }
 
     try
     {
-		properties.width = 1280;
-		properties.height = 720;
+		if (scene_file.empty())
+		{
+			// Default scene
+			scene_file = sutil::samplesDir() + std::string("/data/spaceship.scene");
+			scene = LoadScene(scene_file.c_str());
+		}
+		else
+		{
+			scene = LoadScene(scene_file.c_str());
+		}
 
-        GLFWwindow* window = glfwInitialize();
+		GLFWwindow* window = glfwInitialize();
 
-#ifndef __APPLE__
-        GLenum err = glewInit();
-        if (err != GLEW_OK)
-        {
-            std::cerr << "GLEW init failed: " << glewGetErrorString( err ) << std::endl;
-            exit(EXIT_FAILURE);
-        }
-#endif
+		GLenum err = glewInit();
+        
+		if (err != GLEW_OK)
+		{
+			std::cerr << "GLEW init failed: " << glewGetErrorString( err ) << std::endl;
+			exit(EXIT_FAILURE);
+		}
 
 		ilInit();
 
-        createContext( use_pbo );
+		createContext(use_pbo);
 
-		//if (mesh_files.empty()) {
+		// Load textures
+		for (int i = 0; i < scene->texture_map.size(); i++)
+		{
+			Texture tex;
+			Picture* picture = new Picture;
+			std::string textureFilename = std::string(sutil::samplesDir()) + "/data/" + scene->texture_map[i];
+			std::cout << textureFilename << std::endl;
+			picture->load(textureFilename);
+			tex.createSampler(context, picture);
+			scene->textures.push_back(tex);
+			delete picture;
+		}
 
-			// Default scene
-			scene_file = sutil::samplesDir() + std::string("/data/diningroom.scene");
-			scene = LoadScene(scene_file.c_str(), context);
-		//}
-
+		// Set textures to albedo ID of materials
+		for (int i = 0; i < scene->materials.size(); i++)
+		{
+			if(scene->materials[i].albedoID != RT_TEXTURE_ID_NULL)
+			{
+				scene->materials[i].albedoID = scene->textures[scene->materials[i].albedoID-1].getId();
+			}
+		}
+		
 		m_bufferLightParameters = context->createBuffer(RT_BUFFER_INPUT, RT_FORMAT_USER);
 		m_bufferLightParameters->setElementSize(sizeof(LightParameter));
 		m_bufferLightParameters->setSize(scene->lights.size());
@@ -703,7 +719,7 @@ int main( int argc, char** argv )
 		//const optix::float3 camera_lookat(optix::make_float3(0,1,3));
 		
         const optix::float3 camera_up( optix::make_float3( 0.0f, 1.0f, 0.0f ) );
-        sutil::Camera camera( properties.width, properties.height, 
+        sutil::Camera camera( scene->properties.width, scene->properties.height, 
                 &camera_eye.x, &camera_lookat.x, &camera_up.x,
                 context["eye"], context["U"], context["V"], context["W"] );
 
@@ -718,7 +734,7 @@ int main( int argc, char** argv )
             std::cerr << "Accumulating " << numframes << " frames ..." << std::endl;
             for ( unsigned int frame = 0; frame < numframes; ++frame ) {
                 context["frame"]->setUint( frame );
-                context->launch( 0, properties.width, properties.height );
+                context->launch( 0, scene->properties.width, scene->properties.height );
             }
             sutil::writeBufferToFile( out_file.c_str(), getOutputBuffer() );
             std::cerr << "Wrote " << out_file << std::endl;

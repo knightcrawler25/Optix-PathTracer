@@ -17,16 +17,16 @@ mesh
 
 #light
 {
-	type 1
+	type Quad
 	position -131.2839 0.5424 -169.2602
-	u 0 200 0
-	v 0 0 200
+	u -131.2839 200.5424 -169.2602
+	v -131.2839 0.5424 30.7398
 	emission 12 11.6 6.0
 }
 
 light
 {
-	type 0
+	type Sphere
 	position 272 62 -351
 	emission 5.5 10.9 20
 	radius 10
@@ -34,7 +34,7 @@ light
 
 light
 {
-	type 0
+	type Sphere
 	position -1000 500 -169.0
 	emission 24000 22000 12000
 	radius 10

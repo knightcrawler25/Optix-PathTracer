@@ -130,9 +130,8 @@ RT_PROGRAM void closest_hit()
 
 	prd.radiance += mat.emission * prd.throughput;
 
-	prd.specularBounce = false;
-	if (mat.brdf == GLASS)
-		prd.specularBounce = true;
+	//TODO: Clean up handling of specular bounces
+	prd.specularBounce = mat.brdf == GLASS? true : false;
 
 	// Direct light Sampling
 	if (!prd.specularBounce && prd.depth < max_depth)

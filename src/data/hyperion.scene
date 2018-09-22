@@ -44,10 +44,15 @@ material cream
 
 material ping
 {
-	color 1.0 1.0 1.0
-	roughness 0.8
-	subsurface 1.0
-	specular 0.5
+	#color 1.0 1.0 1.0
+	#roughness 0.8
+	#subsurface 1.0
+	#specular 0.5
+	
+	color 0.93 0.89 0.85
+	specular 0.6
+	roughness 0.2
+	subsurface 0.4
 }
 
 material marb1
@@ -147,5 +152,5 @@ light
 	emission 80.0 80.0 80.0
 	position 0 390.0 -439.0
 	radius 60.0
-	type 0
+	type Sphere
 }

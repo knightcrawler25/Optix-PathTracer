@@ -49,7 +49,8 @@ struct Scene
 	std::vector<MaterialParameter> materials;
 	std::vector<LightParameter> lights;
 	std::vector<Texture> textures;
+	std::map<int, std::string> texture_map;
 	Properties properties;
 };
 
-Scene* LoadScene(const char* filename, optix::Context &context);
+Scene* LoadScene(const char* filename);

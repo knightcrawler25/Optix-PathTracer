@@ -15,8 +15,8 @@ struct LightParameter
 	optix::float3 position;
 	optix::float3 normal;
 	optix::float3 emission;
-	optix::float3 v1;
-	optix::float3 v2;
+	optix::float3 u;
+	optix::float3 v;
 	float area;
 	float radius;
 	LightType lightType;
