@@ -32,7 +32,7 @@ Following are some scenes rendered with the path tracer
 [Spaceship](https://www.blendswap.com/blends/view/75686) (Render Time: ~6 minutes on a GTX 750ti)
 ![Spaceship](./spaceship.png)
 
-[Stormtrooper](https://www.blendswap.com/blends/view/76637) (Render Time: Render Time: ~4 minutes)
+[Stormtrooper](https://www.blendswap.com/blends/view/76637) (Render Time: ~4 minutes)
 ![Stormtrooper](./stormtrooper.png)
 
 [Coffee Pot](https://benedikt-bitterli.me/resources) (Render Time: 4 minutes. 1k spp)
