@@ -84,6 +84,10 @@ project(OptiX-Advanced-Samples)
 # properly.
 cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # As of CMake 2.6 policies were introduced in order to provide a mechanism for
 # adding backwards compatibility one feature at a time.  We will just specify
 # that all policies will use version 2.6 symantics.
@@ -131,10 +135,13 @@ endif()
 find_package(CUDA 7.0 REQUIRED)
 find_package(OpenGL REQUIRED)
 
-set(IL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/support/DevIL/include)
-set(IL_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/DevIL.lib)
-set(ILU_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILU.lib)
-set(ILUT_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILUT.lib)
+
+if(WIN32)
+  set(IL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/support/DevIL/include)
+  set(IL_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/DevIL.lib)
+  set(ILU_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILU.lib)
+  set(ILUT_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILUT.lib)
+endif()
 
 find_package(DevIL)
 
