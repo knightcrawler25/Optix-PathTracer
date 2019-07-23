@@ -27,9 +27,6 @@
 
 using namespace optix;
 
-rtDeclareVariable(Ray, ray, rtCurrentRay, );
-rtDeclareVariable(float, t_hit, rtIntersectionDistance, );
-
 RT_FUNCTION float sqr(float x) { return x*x; }
 
 RT_FUNCTION float SchlickFresnel(float u)
@@ -68,8 +65,8 @@ RT_FUNCTION float smithG_GGX(float NDotv, float alphaG)
 RT_CALLABLE_PROGRAM void Pdf(MaterialParameter &mat, State &state, PerRayData_radiance &prd)
 {
 	float3 n = state.ffnormal;
-	float3 V = -ray.direction;
-	float3 L = prd.direction;
+	float3 V = prd.wo;
+	float3 L = prd.bsdfDir;
 
 	float specularAlpha = max(0.001f, mat.roughness);
 	float clearcoatAlpha = lerp(0.1f, 0.001f, mat.clearcoatGloss);
@@ -100,7 +97,7 @@ RT_CALLABLE_PROGRAM void Pdf(MaterialParameter &mat, State &state, PerRayData_ra
 RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData_radiance &prd)
 {
 	float3 N = state.ffnormal;
-	float3 V = -ray.direction;
+	float3 V = prd.wo;
 	prd.origin = state.fhp;
 
 	float3 dir;
@@ -135,15 +132,15 @@ RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData
 		dir = 2.0f*dot(V, half)*half - V; //reflection vector
 
 	}
-	prd.direction = dir;
+	prd.bsdfDir = dir;
 }
 
 
 RT_CALLABLE_PROGRAM float3 Eval(MaterialParameter &mat, State &state, PerRayData_radiance &prd)
 {
 	float3 N = state.ffnormal;
-	float3 V = -ray.direction;
-	float3 L = prd.direction;
+	float3 V = prd.wo;
+	float3 L = prd.bsdfDir;
 
 	float NDotL = dot(N, L);
 	float NDotV = dot(N, V);

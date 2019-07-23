@@ -37,8 +37,6 @@
 #include "state.h"
 
 using namespace optix;
-
-rtDeclareVariable(Ray, ray, rtCurrentRay, );
 rtDeclareVariable(float, t_hit, rtIntersectionDistance, );
 
 // -----------------------------------------------------------------------------
@@ -65,7 +63,7 @@ RT_CALLABLE_PROGRAM void Pdf(MaterialParameter &mat, State &state, PerRayData_ra
 
 RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData_radiance &prd)
 {
-	const float3 w_out = -ray.direction;
+	const float3 w_out = prd.wo;
 	float3 normal = state.normal;
 	float cos_theta_i = optix::dot( w_out, normal );
 
@@ -95,13 +93,13 @@ RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData
 	{
 		// Reflect
 		prd.origin = state.fhp;
-		prd.direction =  optix::reflect( -w_out, normal );
+		prd.bsdfDir =  optix::reflect( -w_out, normal );
 	}
 	else
 	{
 		// Refract
 		prd.origin = state.bhp;
-		prd.direction = w_t;
+		prd.bsdfDir = w_t;
 	}
 }
 

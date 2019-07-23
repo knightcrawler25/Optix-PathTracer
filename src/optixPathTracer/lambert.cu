@@ -27,14 +27,11 @@
 
 using namespace optix;
 
-rtDeclareVariable(Ray, ray, rtCurrentRay, );
-rtDeclareVariable(float, t_hit, rtIntersectionDistance, );
-
 
 RT_CALLABLE_PROGRAM void Pdf(MaterialParameter &mat, State &state, PerRayData_radiance &prd)
 {
 	float3 n = state.ffnormal;
-	float3 L = prd.direction;
+	float3 L = prd.bsdfDir;
 	
 	float pdfDiff = abs(dot(L, n))* (1.0f / M_PIf);
 
@@ -57,15 +54,15 @@ RT_CALLABLE_PROGRAM void Sample(MaterialParameter &mat, State &state, PerRayData
 	cosine_sample_hemisphere(r1, r2, dir);
 	onb.inverse_transform(dir);
 	
-	prd.direction = dir;
+	prd.bsdfDir = dir;
 }
 
 
 RT_CALLABLE_PROGRAM float3 Eval(MaterialParameter &mat, State &state, PerRayData_radiance &prd)
 {
 	float3 N = state.ffnormal;
-	float3 V = -ray.direction;
-	float3 L = prd.direction;
+	float3 V = prd.wo;
+	float3 L = prd.bsdfDir;
 
 	float NDotL = dot(N, L);
 	float NDotV = dot(N, V);

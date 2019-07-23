@@ -41,7 +41,8 @@ struct PerRayData_radiance
   bool specularBounce;
   float3 radiance;
   float3 origin;
-  float3 direction;
+  float3 bsdfDir;
+  float3 wo;
   float3 throughput;
   float pdf;
 };

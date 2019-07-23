@@ -96,7 +96,7 @@ RT_PROGRAM void pinhole_camera()
 
   // next ray to be traced
   prd.origin = make_float3( 0.0f );
-  prd.direction = make_float3( 0.0f );
+  prd.bsdfDir = make_float3( 0.0f );
 
   float3 result = make_float3( 0.0f );
 
@@ -105,6 +105,7 @@ RT_PROGRAM void pinhole_camera()
   // in closest hit programs.
   for(;;) {
       optix::Ray ray(ray_origin, ray_direction, /*ray type*/ 0, scene_epsilon );
+	  prd.wo = -ray.direction;
       rtTrace(top_object, ray, prd);
 
       if ( prd.done || prd.depth >= max_depth)
@@ -114,7 +115,7 @@ RT_PROGRAM void pinhole_camera()
 
       // Update ray data for the next path segment
       ray_origin = prd.origin;
-      ray_direction = prd.direction;
+      ray_direction = prd.bsdfDir;
   }
 
   result = prd.radiance;

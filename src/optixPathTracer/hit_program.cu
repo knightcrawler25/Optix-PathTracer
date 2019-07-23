@@ -97,7 +97,7 @@ RT_FUNCTION float3 DirectLight(MaterialParameter &mat, State &state)
 		float NdotL = dot(lightSample.normal, -lightDir);
 		float lightPdf = lightDistSq / (light.area * NdotL);
 
-		prd.direction = lightDir;
+		prd.bsdfDir = lightDir;
 
 		sysBRDFPdf[programId](mat, state, prd);
 		float3 f = sysBRDFEval[programId](mat, state, prd);
@@ -127,6 +127,7 @@ RT_PROGRAM void closest_hit()
 	state.bhp = back_hit_point;
 	state.normal = world_shading_normal;
 	state.ffnormal = ffnormal;
+	prd.wo = -ray.direction;
 
 	prd.radiance += mat.emission * prd.throughput;
 
