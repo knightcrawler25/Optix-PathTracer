@@ -623,7 +623,7 @@ int main( int argc, char** argv )
             }
             out_file = argv[++i];
         }
-		else if (arg == "-scene")
+		else if (arg == "-scene" || arg == "-scene")
 		{
 			if (i == argc - 1)
 			{
@@ -648,7 +648,7 @@ int main( int argc, char** argv )
 		if (scene_file.empty())
 		{
 			// Default scene
-			scene_file = sutil::samplesDir() + std::string("/data/spaceship.scene");
+			scene_file = sutil::samplesDir() + std::string("/data/cornell.scene");
 			scene = LoadScene(scene_file.c_str());
 		}
 		else
@@ -710,7 +710,7 @@ int main( int argc, char** argv )
 
         context->validate();
 
-        const optix::float3 camera_eye( optix::make_float3( 0.0f, 1.5f*aabb.extent( 1 ), 1.5f*aabb.extent( 2 ) ) );
+        const optix::float3 camera_eye( optix::make_float3( 0.0f, 1.5f*aabb.extent( 1 ), -1.5f*aabb.extent( 2 ) ) );
 		const optix::float3 camera_lookat(aabb.center());
 
 		//const optix::float3 camera_eye(optix::make_float3(278, 273, -800));

@@ -70,5 +70,5 @@ light
 	emission 17 12 4
 	v1 343 548.79999 332
 	v2 213 548.79999 227
-	type 1
+	type Quad
 }
