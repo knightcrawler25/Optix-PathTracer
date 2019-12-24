@@ -141,9 +141,10 @@ if(WIN32)
   set(IL_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/DevIL.lib)
   set(ILU_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILU.lib)
   set(ILUT_LIBRARIES ${PROJECT_SOURCE_DIR}/support/DevIL/lib/x64/Release/ILUT.lib)
+  find_package(DevIL)
+else()
+    find_package(DevIL REQUIRED)
 endif()
-
-find_package(DevIL)
 
 if ( OPENGL_FOUND AND OPENGL_INCLUDE_DIR )
   include_directories( ${OPENGL_INCLUDE_DIR} )
