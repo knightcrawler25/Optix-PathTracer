@@ -5,6 +5,16 @@ OptixPathTracer
 ![Dining Room](./dining.png)
 [Dining Room](https://www.blendswap.com/blends/view/86457)
 
+> :warning: **Warning**
+> 
+> Code in this repo was written for an older version of OptiX (5.x) and the repo is not maintained anymore. I would recommend using the newer OptiX 7.x API. Have a look at the following repos:
+> 
+> https://github.com/NVIDIA/OptiX_Apps <br/>
+> https://github.com/owl-project/owl<br/>
+> https://github.com/shocker-0x15/OptiX_Utility
+> 
+> If you're specifically looking for an implementation of the Disney BSDF then have a look at [PBRT-v3](https://github.com/mmp/pbrt-v3/blob/master/src/materials/disney.cpp) or my [other repo](https://github.com/knightcrawler25/GLSL-PathTracer/blob/master/src/shaders/common/disney.glsl)
+
 A physically based path tracer with support for Disney BRDF.
 
 This was created by putting together bits and pieces from the Nvidia's Optix Advanced Samples Introduction tutorials.
